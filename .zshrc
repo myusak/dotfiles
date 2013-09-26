@@ -52,18 +52,12 @@ zstyle ':zle:*' word-style unspecified
 alias -g G='| grep'
 alias -g L='| less'
 alias la='ls -G -w -h'
-alias la='ls -a'
 alias lf='ls -F'
 alias ll='ls -l'
 alias up='cd ..'
 alias vi='vim'
 
-source ~/perl5/perlbrew/etc/bashrc
-PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
-
-# for RVM
-[ -s ${HOME}/.rvm/scripts/rvm ] && source ${HOME}/.rvm/scripts/rvm
-
+source ~/.zshrc.local
 
 PROMPT="%{${fg[red]}%}[%n@%m]%{${reset_color}%} %~
 %# "
