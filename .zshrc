@@ -57,7 +57,8 @@ alias ll='ls -l'
 alias up='cd ..'
 alias vi='vim'
 
-source ~/.zshrc.local
 
 PROMPT="%{${fg[red]}%}[%n@%m]%{${reset_color}%} %~
 %# "
+
+[ -f ~/.zshrc.local ] && source ~/.zshrc.local
