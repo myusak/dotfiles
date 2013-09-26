@@ -138,9 +138,4 @@ let g:unite_source_menu_menus = {
 " 挿入モードを抜けた時に IME を off
 map <silent> <ESC> <ESC>:set imdisable<CR>
 
-" :q と押し間違えるので Q: に変更
-nnoremap <F5> <CR>q:
-nnoremap <F6> <CR>q/
-nnoremap q: <NOP>
-nnoremap q/ <NOP>
-nnoremap q? <NOP>
+
