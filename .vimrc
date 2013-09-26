@@ -32,11 +32,6 @@ set clipboard=unnamed
 
 colorscheme evening
 
-
-if has('win32') || has('win64')
-	set viminfo+=n~/.vim/.viminfo
-endif
-
 " バックアップを取らない？
 set nobackup
 set writebackup

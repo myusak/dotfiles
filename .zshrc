@@ -1,4 +1,4 @@
-# Lines configured by zsh-newuser-install
+
 HISTFILE=~/.histfile
 HISTSIZE=1000
 SAVEHIST=1000
@@ -53,7 +53,7 @@ alias -g G='| grep'
 alias -g L='| less'
 alias la='ls -l -a'
 alias lf='ls -F -a -l | grep -v /'
-alias ldir='ls -F | grep /'
+alias ldir='ls -F -l -a | grep /'
 alias ll='ls -l'
 alias up='cd ..'
 alias vi='vim'
