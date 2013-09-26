@@ -4,6 +4,6 @@ for dotfile in .?*
 do
 	if [ $dotfile != '..' ] && [ $dotfile != '.git' ] && [ $dotfile != '.DS_Store' ]
 	then
-		ln -Fis "$PWD/$dotfile" $HOME
+		ln -s "$PWD/$dotfile" $HOME
 	fi
 done
