@@ -51,8 +51,9 @@ zstyle ':zle:*' word-style unspecified
 
 alias -g G='| grep'
 alias -g L='| less'
-alias la='ls -G -w -h'
-alias lf='ls -F'
+alias la='ls -l -a'
+alias lf='ls -F -a -l | grep -v /'
+alias ldir='ls -F | grep /'
 alias ll='ls -l'
 alias up='cd ..'
 alias vi='vim'
