@@ -123,19 +123,3 @@ nmap <Space>v [vimfiler]
 noremap <silent> [vimfiler]c :<C-u>VimFilerCurrentDir<CR>
 noremap <silent> [vimfiler]e :<C-u>VimFilerExplorer<CR>
 
-
-let g:unite_source_menu_menus = {
-\	"shortcut" : {
-\		"description" : "frequently used command",
-\		"command_candidates" : [
-\			["unite-file_mru", "Unite file_mru"],
-\			["change color scheme with auto preview", "Unite -auto-preview colorscheme"],
-\			["unite-output:message", "Unite output:message"],
-\		],
-\	},
-\}
-
-" 挿入モードを抜けた時に IME を off
-map <silent> <ESC> <ESC>:set imdisable<CR>
-
-
