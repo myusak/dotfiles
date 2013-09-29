@@ -16,7 +16,9 @@ set autoindent
 set smartindent
 set showcmd
 set laststatus=2
-set statusline=%F%r%h%=
+
+" [ファイル名][編集フラグ][RO][ヘルプ][エンコード][フォーマット][現在行数/総行数]
+set statusline=[%F]%m%r%h%{'['.(&fenc!=''?&fenc:&enc).']['.&fileformat.']'}[%l/%L]
 set mouse=a
 set textwidth=0
 set formatoptions=q
@@ -30,9 +32,7 @@ set directory=~/.vimswap
 
 set clipboard=unnamed
 
-colorscheme evening
-
-" バックアップを取らない？
+" バックアップを取らない
 set nobackup
 set writebackup
 set backupcopy=no
@@ -77,6 +77,7 @@ let g:neocomplcache_max_list = 40
 inoremap <expr><Tab> pumvisible() ? "\<Down>" : "\<Tab>"
 inoremap <expr><S-Tab> pumvisible() ? "\<up>" : "\<S-Tab>"
 
+" カレントディレクトリ変更
 command! -nargs=? -complete=dir -bang CD call s:ChangeCurrentDir('<args>', '<bang>')
 function s:ChangeCurrentDir(directory, bang)
 	if a:directory == ''
@@ -109,12 +110,23 @@ noremap <silent> [unite]c :<C-u>UniteWithCurrentDir -buffer-name=files buffer fi
 noremap <silent> [unite]C :<C-u>UniteWithCurrentDir -buffer-name=files file_mru file -vertical -winwidth=30<CR>
 noremap <silent> [unite]b :<C-u>Unite buffer<CR>
 noremap <silent> [unite]o :<C-u>Unite outline -no-quit -vertical -winwidth=30<CR>
-
-noremap [quickrun] <Nop>
-nmap <Space>q [quickrun]
+noremap <silent> [unite]t :<C-u>Unite -buffer-name=tabs tab<CR>
+noremap <silent> [unite]r :<C-u>Unite -buffer-name=registers register<CR>
+noremap <silent> / :<C-u>Unite -buffer-name=search line/fast -start-insert -no-quit<CR>
 
 noremap [vimfiler] <Nop>
 nmap <Space>v [vimfiler]
 noremap <silent> [vimfiler]c :<C-u>VimFilerCurrentDir<CR>
 noremap <silent> [vimfiler]e :<C-u>VimFilerExplorer<CR>
 
+function! HandleURI()
+	let s:uri = matchstr(getline("."), '[a-z]*:\/\/[^ >,;:]*')
+	echo s:uri
+	if s:uri != ""
+		exec "!open \"" . s:uri . "\""
+	else
+		echo "No URI found in line."
+	endif
+endfunction
+
+map <Leader>w :call HandleURI()<CR>
