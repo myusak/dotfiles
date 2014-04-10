@@ -9,38 +9,36 @@ set encoding=utf-8
 set fileencodings=iso-2022-jp,euc-jp,sjis,utf-8
 set fileformats=unix,dos,mac
 
+" vim reloads files when the files are changed
 set autoread
 
 set tabstop=4 softtabstop=0 shiftwidth=4
 set autoindent
 set smartindent
+
 set showcmd
 set laststatus=2
 
-" [ファイル名][編集フラグ][RO][ヘルプ][エンコード][フォーマット][現在行数/総行数]
+" [filename][editor flag][RO][help][encoding][file format][current line/total]
 set statusline=[%F]%m%r%h%{'['.(&fenc!=''?&fenc:&enc).']['.&fileformat.']'}[%l/%L]
 set mouse=a
 set textwidth=0
 set formatoptions=q
 
 set hlsearch
-set backup
-set backupdir=~/.vimbackup
 
 set swapfile
 set directory=~/.vimswap
 
 set clipboard=unnamed
 
-" バックアップを取らない
-set nobackup
 set writebackup
-set backupcopy=no
+set backupdir=~/.vimbackup
 
-" backspace での消去、行連結、インデント削除を有効化
+" enable erase, concat lines, indent delete with backspace key
 set backspace=start,eol,indent
 
-" コマンド補完
+" command completion
 set wildmenu wildmode=list:full
 
 filetype off
@@ -50,34 +48,43 @@ if has('vim_starting')
 	call neobundle#rc(expand('~/.vim/bundle'))
 endif
 
-NeoBundle 'git://github.com/Shougo/unite.vim.git'
-NeoBundle 'git://github.com/Shougo/neocomplcache'
-NeoBundle 'git://github.com/Shougo/vimproc'
-NeoBundle 'git://github.com/Shougo/vimfiler'
-NeoBundle 'git://github.com/Shougo/vimshell.git'
-NeoBundle 'thinca/vim-quickrun'
+NeoBundle 'Shougo/unite.vim.git'
+NeoBundle 'Shougo/neomru.vim'
+NeoBundle 'Shougo/neocomplcache'
+NeoBundle 'Shougo/vimshell.git'
 NeoBundle 'Shougo/unite-outline'
+NeoBundle 'Shougo/vimproc', {
+\ 'build' : {
+\     'windows' : 'make -f make_mingw32.mak',
+\     'cygwin' : 'make -f make_cygwin.mak',
+\     'mac' : 'make -f make_mac.mak',
+\     'unix' : 'make -f make_unix.mak',
+\    },
+\ }
+
+NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'ujihisa/unite-colorscheme'
 NeoBundle 'sgur/unite-qf'
 NeoBundle 'Shougo/unite-build'
-
+NeoBundle 'tpope/vim-fugitive'
 
 filetype plugin on
 filetype indent on
 
-
-" 起動時に neocomplcache を起動
+" neocomplcache
 let g:neocomplcache_enable_at_startup = 1
-" スマートケース検索
 let g:neocomplcache_enable_smart_case = 1
-" ポップアップメニューの最大個数
 let g:neocomplcache_max_list = 40
 
-" タブキーでの移動
 inoremap <expr><Tab> pumvisible() ? "\<Down>" : "\<Tab>"
 inoremap <expr><S-Tab> pumvisible() ? "\<up>" : "\<S-Tab>"
 
-" カレントディレクトリ変更
+
+" vimshell
+let g:vimshell_prompt = "% "
+let g:vimshell_secondary_prompt = "> "
+let g:vimshell_user_prompt = 'getcwd()'
+
 command! -nargs=? -complete=dir -bang CD call s:ChangeCurrentDir('<args>', '<bang>')
 function s:ChangeCurrentDir(directory, bang)
 	if a:directory == ''
@@ -94,12 +101,11 @@ endfunction
 nnoremap <Space>cd :<C-u>CD<CR>
 nnoremap <C-l> :nohlsearch<CR><C-l>
 
-" 誤操作が困るキーの無効化
 noremap Q <Nop>
 noremap ZZ <Nop>
 noremap ZQ <Nop>
 
-" 表示行単位で移動する
+" move by displayed line
 noremap j gj
 noremap k gk
 
@@ -112,12 +118,6 @@ noremap <silent> [unite]b :<C-u>Unite buffer<CR>
 noremap <silent> [unite]o :<C-u>Unite outline -no-quit -vertical -winwidth=30<CR>
 noremap <silent> [unite]t :<C-u>Unite -buffer-name=tabs tab<CR>
 noremap <silent> [unite]r :<C-u>Unite -buffer-name=registers register<CR>
-noremap <silent> / :<C-u>Unite -buffer-name=search line/fast -start-insert -no-quit<CR>
-
-noremap [vimfiler] <Nop>
-nmap <Space>v [vimfiler]
-noremap <silent> [vimfiler]c :<C-u>VimFilerCurrentDir<CR>
-noremap <silent> [vimfiler]e :<C-u>VimFilerExplorer<CR>
 
 function! HandleURI()
 	let s:uri = matchstr(getline("."), '[a-z]*:\/\/[^ >,;:]*')
