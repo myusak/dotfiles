@@ -64,6 +64,7 @@ NeoBundle 'Shougo/vimproc', {
 
 NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'ujihisa/unite-colorscheme'
+NeoBundle 'kmnk/vim-unite-giti'
 NeoBundle 'sgur/unite-qf'
 NeoBundle 'Shougo/unite-build'
 NeoBundle 'tpope/vim-fugitive'
