@@ -2,6 +2,8 @@ set nocompatible
 
 syntax on
 
+colorscheme desert
+
 set number
 set nowrap
 
@@ -11,6 +13,8 @@ set fileformats=unix,dos,mac
 
 " vim reloads files when the files are changed
 set autoread
+
+set hidden
 
 set tabstop=4 softtabstop=0 shiftwidth=4
 set autoindent
@@ -48,11 +52,21 @@ if has('vim_starting')
 	call neobundle#rc(expand('~/.vim/bundle'))
 endif
 
+NeoBundle 'Shougo/neocomplete.git'
+NeoBundle 'osyo-manga/vim-marching'
+NeoBundle 'osyo-manga/vim-reunions'
+
+NeoBundle 'Shougo/vimshell.git'
+
 NeoBundle 'Shougo/unite.vim.git'
 NeoBundle 'Shougo/neomru.vim'
-NeoBundle 'Shougo/neocomplcache'
-NeoBundle 'Shougo/vimshell.git'
 NeoBundle 'Shougo/unite-outline'
+NeoBundle 'Shougo/unite-build'
+NeoBundle 'ujihisa/unite-colorscheme'
+NeoBundle 'kmnk/vim-unite-giti'
+NeoBundle 'sgur/unite-qf'
+NeoBundle 'tsukkee/unite-tag.git'
+
 NeoBundle 'Shougo/vimproc', {
 \ 'build' : {
 \     'windows' : 'make -f make_mingw32.mak',
@@ -63,23 +77,69 @@ NeoBundle 'Shougo/vimproc', {
 \ }
 
 NeoBundle 'thinca/vim-quickrun'
-NeoBundle 'ujihisa/unite-colorscheme'
-NeoBundle 'kmnk/vim-unite-giti'
-NeoBundle 'sgur/unite-qf'
-NeoBundle 'Shougo/unite-build'
-NeoBundle 'tpope/vim-fugitive'
 
 filetype plugin on
 filetype indent on
 
+" snowdrop
+let g:snowdrop#libclang_directory = "/usr/lib/llvm-3.3/lib"
+let g:snowdrop#command_optons = {
+\	"cpp" : "-std=c++11"
+\}
+
 " neocomplcache
-let g:neocomplcache_enable_at_startup = 1
-let g:neocomplcache_enable_smart_case = 1
-let g:neocomplcache_max_list = 40
+let g:neocomplete#enable_at_startup = 1
+let g:neocomplete#enable_smart_case = 1
+let g:neocomplete_max_list = 20
 
 inoremap <expr><Tab> pumvisible() ? "\<Down>" : "\<Tab>"
 inoremap <expr><S-Tab> pumvisible() ? "\<up>" : "\<S-Tab>"
+inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
 
+" Enable omni completion.
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+
+" Enable heavy omni completion.
+"if !exists('g:neocomplete#sources#omni#input_patterns')
+"	let g:neocomplete#sources#omni#input_patterns = {}
+"endif
+"let g:neocomplete#sources#omni#input_patterns.php = '[^.  \t]->\h\w*\|\h\w*::'
+"let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+"let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+
+" For perlomni.vim setting.
+" https://github.com/c9s/perlomni.vim
+"let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
+
+let g:marching_clang_command = "clang"
+let g:marching_clang_command_option = "-std=c++11"
+
+let g:marching_include_paths = [
+			\	"/usr/local/include/",
+			\	"/usr/include/",
+			\]
+
+let g:marching_enable_neocomplete = 1
+if !exists('g:neocomplete#force_omni_input_patterns')
+	let g:neocomplete#force_omni_input_patterns = {}
+endif
+let g:neocomplete#force_omni_input_patterns.cpp =
+    \ '[^.[:digit:] *\t]\%(\.\|->\)\w*\|\h\w*::\w*'
+
+" 処理のタイミングを制御する
+" 短いほうがより早く補完ウィンドウが表示される
+set updatetime=100
+
+" オムニ補完時に補完ワードを挿入したくない場合
+imap <buffer> <C-x><C-o> <Plug>(marching_start_omni_complete)
+
+" キャッシュを削除してからオムに補完を行う
+imap <buffer> <C-x><C-x><C-o> <Plug>(marching_force_start_omni_complete)
 
 " vimshell
 let g:vimshell_prompt = "% "
@@ -97,6 +157,11 @@ function s:ChangeCurrentDir(directory, bang)
 	if a:bang == ''
 		pwd
 	endif
+endfunction
+
+function! s:cpp()
+	setlocal path+=/usr/include/,/usr/local/include
+	setlocal matchpairs += <:>
 endfunction
 
 nnoremap <Space>cd :<C-u>CD<CR>
