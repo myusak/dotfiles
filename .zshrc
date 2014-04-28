@@ -25,8 +25,12 @@ zstyle ':completion:*:process' command 'ps x -o pid,s,args'
 
 export LANG=ja_JP.UTF-8
 
-# ファイル名が日本語のものを表示可能に
+#ファイル名が日本語のものを表示可能に
 setopt print_eight_bit
+
+export LSCOLORS=gxfxxxxxcxxxxxxxxxgxgx
+export LS_COLORS='di=01;36:ln=01;35:ex=01;32'
+zstyle ':completion:*' list-colors 'di=36' 'ln=35' 'ex=32'
 
 setopt no_beep
 setopt auto_cd
@@ -50,10 +54,8 @@ zstyle ':zle:*' word-style unspecified
 
 alias -g G='| grep'
 alias -g L='| less'
-alias ll='ls -l'
-alias la='ls -l -a'
-alias lf='ls -F -a -l | grep -v /'
-alias ldir='ls -F -l -a | grep /'
+alias ll='ls -shAFl'
+alias la='ls -lshFa'
 alias up='cd ..'
 
 PROMPT="%{${fg[red]}%}[%n@%m]%{${reset_color}%} %~

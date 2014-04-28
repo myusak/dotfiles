@@ -131,14 +131,14 @@ endif
 let g:neocomplete#force_omni_input_patterns.cpp =
     \ '[^.[:digit:] *\t]\%(\.\|->\)\w*\|\h\w*::\w*'
 
-" $B=hM}$N%?%$%_%s%0$r@)8f$9$k(B
-" $BC;$$$[$&$,$h$jAa$/Jd40%&%#%s%I%&$,I=<($5$l$k(B
+" 処理のタイミングを制御する
+" 短いほうがより早く補完ウィンドウが表示される
 set updatetime=100
 
-" $B%*%`%KJd40;~$KJd40%o!<%I$rA^F~$7$?$/$J$$>l9g(B
+" オムニ補完時に補完ワードを挿入したくない場合
 imap <buffer> <C-x><C-o> <Plug>(marching_start_omni_complete)
 
-" $B%-%c%C%7%e$r:o=|$7$F$+$i%*%`$KJd40$r9T$&(B
+" キャッシュを削除してからオムに補完を行う
 imap <buffer> <C-x><C-x><C-o> <Plug>(marching_force_start_omni_complete)
 
 " vimshell
