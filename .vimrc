@@ -36,7 +36,9 @@ set directory=~/.vimswap
 
 set clipboard=unnamed
 
+set nobackup
 set writebackup
+set backupcopy=no
 set backupdir=~/.vimbackup
 
 " enable erase, concat lines, indent delete with backspace key
@@ -57,10 +59,9 @@ NeoBundle 'osyo-manga/vim-marching'
 NeoBundle 'osyo-manga/vim-reunions'
 
 NeoBundle 'Shougo/vimshell.git'
-
+NeoBundle 'Shougo/unite-outline'
 NeoBundle 'Shougo/unite.vim.git'
 NeoBundle 'Shougo/neomru.vim'
-NeoBundle 'Shougo/unite-outline'
 NeoBundle 'Shougo/unite-build'
 NeoBundle 'ujihisa/unite-colorscheme'
 NeoBundle 'kmnk/vim-unite-giti'
@@ -76,75 +77,52 @@ NeoBundle 'Shougo/vimproc', {
 \    },
 \ }
 
+NeoBundle 'supermomonga/projectlocal.vim'
 NeoBundle 'thinca/vim-quickrun'
+
+NeoBundle 'vim-scripts/GCov-plugin'
 
 filetype plugin on
 filetype indent on
 
-" snowdrop
-let g:snowdrop#libclang_directory = "/usr/lib/llvm-3.3/lib"
-let g:snowdrop#command_optons = {
-\	"cpp" : "-std=c++11"
-\}
-
 " neocomplcache
 let g:neocomplete#enable_at_startup = 1
 let g:neocomplete#enable_smart_case = 1
-let g:neocomplete_max_list = 20
+let g:neocomplete#max_list = 30
 
 inoremap <expr><Tab> pumvisible() ? "\<Down>" : "\<Tab>"
 inoremap <expr><S-Tab> pumvisible() ? "\<up>" : "\<S-Tab>"
 inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
 inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
 
-" Enable omni completion.
-autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-
-" Enable heavy omni completion.
-"if !exists('g:neocomplete#sources#omni#input_patterns')
-"	let g:neocomplete#sources#omni#input_patterns = {}
-"endif
-"let g:neocomplete#sources#omni#input_patterns.php = '[^.  \t]->\h\w*\|\h\w*::'
-"let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
-"let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
-
-" For perlomni.vim setting.
-" https://github.com/c9s/perlomni.vim
-"let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
-
 let g:marching_clang_command = "clang"
-let g:marching_clang_command_option = "-std=c++11"
+let g:marching_clang_command_option = "-std=c++1y"
 
 let g:marching_include_paths = [
-			\	"/usr/local/include/",
-			\	"/usr/include/",
+			\	"/usr/local/include",
+			\	"/usr/include",
 			\]
 
 let g:marching_enable_neocomplete = 1
 if !exists('g:neocomplete#force_omni_input_patterns')
 	let g:neocomplete#force_omni_input_patterns = {}
 endif
-let g:neocomplete#force_omni_input_patterns.cpp =
-    \ '[^.[:digit:] *\t]\%(\.\|->\)\w*\|\h\w*::\w*'
 
-" 処理のタイミングを制御する
-" 短いほうがより早く補完ウィンドウが表示される
-set updatetime=100
+let g:neocomplete#force_omni_input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\w*\|\h\w*::\w*'
 
 " オムニ補完時に補完ワードを挿入したくない場合
 imap <buffer> <C-x><C-o> <Plug>(marching_start_omni_complete)
 
-" キャッシュを削除してからオムに補完を行う
+" キャッシュを削除してからオムニ補完を行う
 imap <buffer> <C-x><C-x><C-o> <Plug>(marching_force_start_omni_complete)
 
 " vimshell
 let g:vimshell_prompt = "% "
 let g:vimshell_secondary_prompt = "> "
 let g:vimshell_user_prompt = 'getcwd()'
+
+" unite-build
+let g:unite_builder_make_command = "omake"
 
 command! -nargs=? -complete=dir -bang CD call s:ChangeCurrentDir('<args>', '<bang>')
 function s:ChangeCurrentDir(directory, bang)
@@ -159,13 +137,10 @@ function s:ChangeCurrentDir(directory, bang)
 	endif
 endfunction
 
-function! s:cpp()
-	setlocal path+=/usr/include/,/usr/local/include
-	setlocal matchpairs += <:>
-endfunction
+command! -nargs=1 -complete=file Rename f <args>|call delete(expand('#'))
 
 nnoremap <Space>cd :<C-u>CD<CR>
-nnoremap <C-l> :nohlsearch<CR><C-l>
+nnoremap <C-l> :nohlsearch<CR>:UniteBuildClearHighlight<CR><C-l>
 
 noremap Q <Nop>
 noremap ZZ <Nop>
@@ -177,22 +152,20 @@ noremap k gk
 
 nnoremap [unite] <Nop>
 nmap <Space>u [unite]
+noremap <silent> [unite]q :<C-u>Unite -no-quit qf<CR>
 noremap <silent> [unite]f :<C-u>UniteWithCurrentDir -buffer-name=files file<CR>
-noremap <silent> [unite]c :<C-u>UniteWithCurrentDir -buffer-name=files buffer file_mru bookmark file<CR>
-noremap <silent> [unite]C :<C-u>UniteWithCurrentDir -buffer-name=files file_mru file -vertical -winwidth=30<CR>
-noremap <silent> [unite]b :<C-u>Unite buffer<CR>
+noremap <silent> [unite]c :<C-u>UniteWithCurrentDir -buffer-name=files buffer bookmark file<CR>
+noremap <silent> [unite]C :<C-u>Unite -buffer-name=files file_mru<CR>
+noremap <silent> [unite]b :<C-u>Unite -buffer-name=buffer buffer<CR>
 noremap <silent> [unite]o :<C-u>Unite outline -no-quit -vertical -winwidth=30<CR>
 noremap <silent> [unite]t :<C-u>Unite -buffer-name=tabs tab<CR>
 noremap <silent> [unite]r :<C-u>Unite -buffer-name=registers register<CR>
 
-function! HandleURI()
-	let s:uri = matchstr(getline("."), '[a-z]*:\/\/[^ >,;:]*')
-	echo s:uri
-	if s:uri != ""
-		exec "!open \"" . s:uri . "\""
-	else
-		echo "No URI found in line."
-	endif
-endfunction
+noremap <silent> [unite]m :<C-u>Unite -no-quit build<CR>
 
-map <Leader>w :call HandleURI()<CR>
+noremap [quickrun] <Nop>
+nmap <Space>q [quickrun]
+noremap <silent> [quickrun] :<C-u>QuickRun<CR>
+
+let g:neomru#time_format = "(%Y/%m/%d %H:%M:%S) "
+
