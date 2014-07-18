@@ -7,6 +7,8 @@ colorscheme desert
 set number
 set nowrap
 
+set cursorline
+
 set encoding=utf-8
 set fileencodings=iso-2022-jp,euc-jp,sjis,utf-8
 set fileformats=unix,dos,mac
@@ -80,8 +82,6 @@ NeoBundle 'Shougo/vimproc', {
 NeoBundle 'supermomonga/projectlocal.vim'
 NeoBundle 'thinca/vim-quickrun'
 
-NeoBundle 'vim-scripts/GCov-plugin'
-
 filetype plugin on
 filetype indent on
 
@@ -153,11 +153,11 @@ noremap k gk
 nnoremap [unite] <Nop>
 nmap <Space>u [unite]
 noremap <silent> [unite]q :<C-u>Unite -no-quit qf<CR>
-noremap <silent> [unite]f :<C-u>UniteWithCurrentDir -buffer-name=files file<CR>
-noremap <silent> [unite]c :<C-u>UniteWithCurrentDir -buffer-name=files buffer bookmark file<CR>
+noremap <silent> [unite]f :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
+noremap <silent> [unite]c :<C-u>UniteWithBufferDir -buffer-name=files buffer bookmark file<CR>
 noremap <silent> [unite]C :<C-u>Unite -buffer-name=files file_mru<CR>
 noremap <silent> [unite]b :<C-u>Unite -buffer-name=buffer buffer<CR>
-noremap <silent> [unite]o :<C-u>Unite outline -no-quit -vertical -winwidth=30<CR>
+noremap <silent> [unite]o :<C-u>Unite outline -no-quit<CR>
 noremap <silent> [unite]t :<C-u>Unite -buffer-name=tabs tab<CR>
 noremap <silent> [unite]r :<C-u>Unite -buffer-name=registers register<CR>
 
