@@ -49,12 +49,14 @@ set backspace=start,eol,indent
 " command completion
 set wildmenu wildmode=list:full
 
-filetype off
+" Note: skip initialization for vim-tiny or vim-small
+if !1 | finish | endif
 
 if has('vim_starting')
 	set runtimepath+=~/.vim/bundle/neobundle.vim
-	call neobundle#rc(expand('~/.vim/bundle'))
 endif
+
+call neobundle#begin(expand('~/.vim/bundle'))
 
 NeoBundle 'Shougo/neocomplete.git'
 NeoBundle 'osyo-manga/vim-marching'
@@ -82,8 +84,12 @@ NeoBundle 'Shougo/vimproc', {
 NeoBundle 'supermomonga/projectlocal.vim'
 NeoBundle 'thinca/vim-quickrun'
 
+call neobundle#end()
+
 filetype plugin on
 filetype indent on
+
+NeoBundleCheck
 
 " neocomplcache
 let g:neocomplete#enable_at_startup = 1
