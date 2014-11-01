@@ -43,6 +43,8 @@ set writebackup
 set backupcopy=no
 set backupdir=~/.vimbackup
 
+set undodir=~/.vimundo
+
 " enable erase, concat lines, indent delete with backspace key
 set backspace=start,eol,indent
 
