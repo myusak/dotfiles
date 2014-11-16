@@ -1,57 +1,96 @@
-HISTFILE=~/.histfile
-HISTSIZE=1000
-SAVEHIST=1000
+export LANG=ja_JP.UTF-8
 
+# vi bind
 bindkey -v
-# End of lines configured by zsh-newuser-install
-#
-# The following lines were added by compinstall
+# enable shift tab
+bindkey "^[[Z" reverse-menu-complete
+
+# directory setting
+setopt auto_cd
+setopt auto_pushd
+setopt pushd_ignore_dups
+
+# history file setting
+HISTFILE=~/.zshhist
+HISTSIZE=1000000
+SAVEHIST=$HISTSIZE
+
+setopt extended_history
+setopt hist_ignore_all_dups
+setopt hist_ignore_space
+setopt hist_save_nodups
+setopt hist_reduce_blanks
+setopt inc_append_history # add history immediately
+setopt no_flow_control
+setopt share_history
+
+# completion
 zstyle :compinstall filename '~/.zshrc'
 
 autoload -Uz compinit
 compinit
 
-# 小文字でも大文字にマッチさせる
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
-# ../ の後は今いるディレクトリを補完させない
 zstyle ':completion:*' ignore-parents parent pwd ..
-# sudo の後ろでコマンド名を補完させる
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z} r:|[._-]=*' # ignore case and enable partial-completion
+zstyle ':completion:*' format '%B%d%b'
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*' completer _oldlist _complete _match _history _ignored _approximate _prefix
+zstyle ':completion:*' list-colors 'di=36' 'ln=35' 'ex=32'
+zstyle ':completion:*:default' menu select=2
+zstyle ':completion:*:default' list-colors ""
 zstyle ':completion:*:sudo:*' command-path /usr/local/sbin /usr/local/bin /usr/sbin /usr/bin /sbin /bin /usr/X11R6/bin
-# ps コマンドのプロセス名補完
 zstyle ':completion:*:process' command 'ps x -o pid,s,args'
-# End of lines added by compinstall
 
-# 単語区切りの指定
 autoload -Uz select-word-style
 select-word-style default
+
 zstyle ':zle:*' word-chars " /=;@:{},|"
 zstyle ':zle:*' word-style unspecified
 
-export LANG=ja_JP.UTF-8
 export LSCOLORS=gxfxxxxxcxxxxxxxxxgxgx
 export LS_COLORS='di=01;36:ln=01;35:ex=01;32'
-zstyle ':completion:*' list-colors 'di=36' 'ln=35' 'ex=32'
 
-setopt print_eight_bit
+# misc
 setopt no_beep
-setopt auto_cd
-setopt auto_pushd
-setopt pushd_ignore_dups
-setopt magic_equal_subst
-setopt share_history
-setopt hist_ignore_all_dups
-setopt hist_save_nodups
-setopt hist_ignore_space
-setopt hist_reduce_blanks
+setopt print_eight_bit
+setopt list_packed
 setopt auto_menu
 setopt extended_glob
+setopt magic_equal_subst
+setopt long_list_jobs
 
-[ -f ~/.zshrc.local ] && source ~/.zshrc.local
+REPORTTIME=1
 
 alias ll='ls -lshF'
 alias la='ls -lshFA'
-alias up='cd ..'
 
-PROMPT="%{${fg[red]}%}[%n@%m]%{${reset_color}%} %~
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
+
+
+# prompt
+setopt transient_rprompt
+
+#PROMPT="%{${fg[red]}%}[%n@%m]%{${reset_color}%} %~ 
+#%# "
+
+PROMPT="[%n@%m - %D %*] %~ 
 %# "
 
+[ -n "${REMOTEHOST}${SSH_CONNECTION}" ] && PROMPT="%{[37m%}${HOST%%.*} ${PROMPT}"
+
+[ -f ~/.zshrc.d/.zsh.vcs_info ] && source ~/.zshrc.d/.zsh.vcs_info  # show vcs information on the right prompt
+
+
+# local setting
+[ -f ~/.zshrc.local ] && source ~/.zshrc.local
+
+[ -f ~/.zshrc.d/.zsh.functions ] && source ~/.zshrc.d/.zsh.functions
+
+function chpwd() {
+	abbr_ls
+}
+
+zle -N on_empty_enter
+bindkey '^m' on_empty_enter
