@@ -1,4 +1,4 @@
-export LANG=ja_JP.UTF-8
+export LANG=en_US.UTF-8
 
 # vi bind
 bindkey -v
@@ -61,6 +61,8 @@ setopt long_list_jobs
 
 REPORTTIME=1
 
+alias less='less -N'
+
 alias ll='ls -lshF'
 alias la='ls -lshFA'
 
@@ -72,13 +74,10 @@ alias mv='mv -i'
 # prompt
 setopt transient_rprompt
 
-#PROMPT="%{${fg[red]}%}[%n@%m]%{${reset_color}%} %~ 
-#%# "
-
-PROMPT="[%n@%m - %D %*] %~ 
+PROMPT="[%n@%m - (%D{%c})] %~ 
 %# "
 
-[ -n "${REMOTEHOST}${SSH_CONNECTION}" ] && PROMPT="%{[37m%}${HOST%%.*} ${PROMPT}"
+[ -n "${REMOTEHOST}${SSH_CONNECTION}" ] && PROMPT="%BSSH%b ${PROMPT}"
 
 [ -f ~/.zshrc.d/.zsh.vcs_info ] && source ~/.zshrc.d/.zsh.vcs_info  # show vcs information on the right prompt
 
