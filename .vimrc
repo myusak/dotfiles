@@ -4,7 +4,7 @@ set nocompatible
 
 syntax on
 
-colorscheme desert
+colorscheme koehler
 
 set number
 set nowrap
@@ -12,7 +12,7 @@ set nowrap
 set cursorline
 
 set encoding=utf-8
-set fileencodings=iso-2022-jp,euc-jp,sjis,utf-8
+set fileencodings=utf-8,iso-2022-jp,euc-jp,sjis
 set fileformats=unix,dos,mac
 
 " vim reloads files when the files are changed
@@ -20,9 +20,17 @@ set autoread
 
 set hidden
 
-set tabstop=4 softtabstop=0 shiftwidth=4
+set expandtab
+set tabstop=4 softtabstop=4 shiftwidth=4
 set autoindent
 set smartindent
+
+augroup vimrc
+autocmd! FileType ruby setlocal shiftwidth=2 tabstop=2 softtabstop=2
+augroup END
+
+set list
+set listchars=tab:=-,trail:-
 
 set showcmd
 set laststatus=2
@@ -134,6 +142,9 @@ NeoBundle 'osyo-manga/vim-marching'
 
 " vimshell
 NeoBundle 'Shougo/vimshell.git'
+
+" lldb
+NeoBundle 'gilligan/vim-lldb'
 
 call neobundle#end()
 
