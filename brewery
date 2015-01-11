@@ -1,0 +1,45 @@
+ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
+
+brew update
+brew upgrade
+
+brew install brew-cask
+brew install binutils
+brew install coreutils
+brew install findutils
+brew install boost
+brew install objective-caml
+brew install opam
+brew install pandoc
+brew install cmake
+brew install ctags
+brew install lua
+brew install lua-jit
+brew install nkf
+brew install rbenv
+brew install ruby-build
+brew install tmux
+brew install reattach-to-user-namespace
+brew install tree
+brew install htop
+
+brew tap caskroom/versions
+
+brew cask install iterm2
+brew cask install bettertouchtool
+brew cask install evernote
+brew cask install dropbox
+brew cask install skype
+brew cask install android-studio
+brew cask install google-japanese-ime
+brew cask install google-chrome
+brew cask install google-drive
+brew cask install macvim-kaoriya
+brew cask install sublime-text3
+brew cask install virtualbox
+brew cask install vagrant
+brew cask install genymotion
+
+opam init
+eval `opam config env`
+opam install omake
