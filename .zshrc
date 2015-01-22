@@ -60,17 +60,7 @@ setopt magic_equal_subst
 setopt long_list_jobs
 
 REPORTTIME=1
-
-alias less='less -N'
-
-alias ll='ls -lshF'
-alias la='ls -lshFA'
-
-alias rm='rm -i'
-alias cp='cp -i'
-alias mv='mv -i'
-
-
+#
 # prompt
 setopt transient_rprompt
 
@@ -79,16 +69,19 @@ PROMPT="[%n@%m - (%D{%c})] %~
 
 [ -n "${REMOTEHOST}${SSH_CONNECTION}" ] && PROMPT="%BSSH%b ${PROMPT}"
 
-[ -f ~/.zshrc.d/.zsh.vcs_info ] && source ~/.zshrc.d/.zsh.vcs_info  # show vcs information on the right prompt
-
+# show vcs information on the right prompt
+[ -f ~/.zshrc.d/.zsh.vcs_info ] && source ~/.zshrc.d/.zsh.vcs_info
 
 # local setting
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
 
+# alias
+[ -f ~/.zshrc.d/.zsh.alias ] && source ~/.zshrc.d/.zsh.alias
+
 [ -f ~/.zshrc.d/.zsh.functions ] && source ~/.zshrc.d/.zsh.functions
 
 function chpwd() {
-	abbr_ls
+    abbr_ls
 }
 
 zle -N on_empty_enter

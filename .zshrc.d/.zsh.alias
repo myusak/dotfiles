@@ -1,0 +1,9 @@
+alias less='less -N'
+
+alias ll='ls -lshF'
+alias la='ls -lshFA'
+
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
+
