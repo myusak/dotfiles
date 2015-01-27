@@ -1,2 +1,10 @@
-bundle
+### https://raw.github.com/github/gitignore/2609c4c7289aa2ebb3fc0936abbc2cba9d7bd07f/Global/Vim.gitignore
+
+[._]*.s[a-w][a-z]
+[._]s[a-w][a-z]
+*.un~
+Session.vim
 .netrwhist
+*~
+
+bundle
