@@ -55,16 +55,16 @@ set formatoptions=q
 set hlsearch
 
 set swapfile
-set directory=~/.vimswap
+set directory=~/.vim/.vimswap
 
 set clipboard=unnamed
 
 set nobackup
 set writebackup
 set backupcopy=no
-set backupdir=~/.vimbackup
+set backupdir=~/.vim/.vimbackup
 
-set undodir=~/.vimundo
+set undodir=~/.vim/.vimundo
 
 " enable erase, concat lines, indent delete with backspace key
 set backspace=start,eol,indent

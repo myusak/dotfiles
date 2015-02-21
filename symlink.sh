@@ -9,12 +9,12 @@ do
 done
 
 vimtmpdirs=(".vimswap" ".vimundo" ".vimbackup")
-for vimtmpdir in $vimtmpdirs 
+for vimtmpdir in $vimtmpdirs
 do
-    if [ ! -e "$HOME/$vimtmpdir" ]
+    if [ ! -e "$HOME/.vim/$vimtmpdir" ]
     then
-        echo "$HOME/$vimtmpdir"
-        mkdir -p "$HOME/$vimtmpdir"
+        echo "mkdir $HOME/.vim/$vimtmpdir"
+        mkdir -p "$HOME/.vim/$vimtmpdir"
     fi
 
 done
