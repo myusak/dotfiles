@@ -1,10 +1,13 @@
 scriptencoding utf8
 
+set guioptions-=M
+
 set nocompatible
 
 syntax on
 
 colorscheme koehler
+
 
 set number
 set nowrap

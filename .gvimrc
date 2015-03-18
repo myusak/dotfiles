@@ -1,5 +1,3 @@
-colorscheme evening 
-
 if has('win32')
   set guifont=Ricty:h14
 elseif has('gui_macvim')
@@ -9,6 +7,8 @@ elseif has('xfontset')
   set guifontset=a14,r14,k14
 endif
 
+colorscheme murphy
+
 " delete tool bar
 set guioptions-=T
 " delete menu bar
@@ -16,6 +16,9 @@ set guioptions-=m
 " delete right scroll bar
 set guioptions-=R
 set guioptions-=r
+set guioptions-=l
+set guioptions-=L
+
 
 set visualbell
 
