@@ -136,10 +136,12 @@ NeoBundle 'osyo-manga/shabadou.vim'
 NeoBundle 'jceb/vim-hier'
 
 " Unite and Unite Sources
-NeoBundle 'Shougo/unite.vim.git'
+NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/neomru.vim'
 NeoBundle 'Shougo/unite-outline'
 NeoBundle 'Shougo/unite-build'
+NeoBundle 'Shougo/neossh.vim'
+NeoBundle 'Shougo/vimfiler.vim'
 NeoBundle 'ujihisa/unite-colorscheme'
 NeoBundle 'kmnk/vim-unite-giti'
 NeoBundle 'sgur/unite-qf'
@@ -158,9 +160,8 @@ NeoBundle 'plasticboy/vim-markdown'
 NeoBundle 'kannokanno/previm'
 NeoBundle 'tyru/open-browser.vim'
 
-" lldb
-"NeoBundle 'gilligan/vim-lldb'
-
+" git
+NeoBundle 'tpope/vim-fugitive'
 
 call neobundle#end()
 
@@ -263,7 +264,7 @@ function! s:hooks.on_source(bundle)
     \ "name" : "clear_quickfix",
     \ "kind" : "hook",
     \}
-    
+
     function! s:hook.on_normalized(session, context)
         call setqflist([])
     endfunction
@@ -278,6 +279,13 @@ function! s:hooks.on_source(bundle)
     let g:watchdogs_check_BufWritePost_enable = 1
 endfunction
 unlet s:hooks
+
+let s:hooks = neobundle#get_hooks("vimfiler.vim")
+function! s:hooks.on_source(bundle)
+    let g:vimfiler_as_default_explorer = 1
+endfunction
+unlet s:hooks
+
 
 let s:hooks = neobundle#get_hooks("powerline")
 function! s:hooks.on_source(bundle)
