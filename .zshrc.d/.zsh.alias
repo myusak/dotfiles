@@ -1,7 +1,9 @@
 alias less='less -N'
 
+alias ls='ls --color=always'
 alias ll='ls -lshF'
 alias la='ls -lshFA'
+alias l='ls -CF'
 
 alias rm='rm -i'
 alias cp='cp -i'
