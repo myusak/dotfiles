@@ -1,0 +1,36 @@
+{
+    "segments": {
+        "left": [
+            {
+                "function": "powerline.segments.common.time.date"
+            },
+            {
+                "function": "powerline.segments.common.time.date",
+                "name": "time",
+                "args": {
+                    "format": "%H:%M",
+                    "istime": true
+                }
+            }
+        ],
+        "right": [
+            {
+                "function": "powerline.segments.common.bat.battery"
+            },
+            {
+                "function": "powerline.segments.common.sys.uptime"
+            },
+            {
+                "function": "powerline.segments.common.sys.system_load"
+            },
+            {
+                "function": "powerline.segments.common.wthr.weather",
+                "interval": 3600,
+                "args": {
+                    "unit": "C",
+                    "location_query": "Tokyo, Japan"
+                }
+            }
+        ]
+    }
+}

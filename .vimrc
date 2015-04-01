@@ -1,5 +1,7 @@
 scriptencoding utf8
 
+set term=screen-256color
+
 set guioptions-=M
 
 set nocompatible
@@ -45,12 +47,6 @@ set showcmd
 set laststatus=2
 set noshowmode
 
-set rtp+=~/.vim/bundle/powerline/powerline/bindings/vim
-
-let g:Powerline_symbols = 'fancy'
-
-" [filename][editor flag][RO][help][encoding][file format][current line/total]
-set statusline=[%F]%m%r%h%{'['.(&fenc!=''?&fenc:&enc).']['.&fileformat.']'}[%l/%L]
 set mouse=a
 set textwidth=0
 set formatoptions=q
@@ -165,9 +161,6 @@ NeoBundle 'tyru/open-browser.vim'
 " lldb
 "NeoBundle 'gilligan/vim-lldb'
 
-" powerline
-NeoBundle 'alpaca-tc/alpaca_powertabline'
-NeoBundle 'Lokaltog/powerline.git'
 
 call neobundle#end()
 
@@ -373,3 +366,9 @@ function! GoogleComplete(findstart, base)
     endif
 endfunction
 
+" powerline config
+if has("mac")
+    python from powerline.vim import setup as powerline_setup
+    python powerline_setup()
+    python del powerline_setup
+endif
