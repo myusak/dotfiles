@@ -162,6 +162,9 @@ NeoBundle 'tyru/open-browser.vim'
 " git
 NeoBundle 'tpope/vim-fugitive'
 
+" scala syntax
+NeoBundle 'derekwyatt/vim-scala'
+
 call neobundle#end()
 
 filetype plugin on
