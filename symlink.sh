@@ -18,3 +18,16 @@ do
     fi
 
 done
+
+if [ ! -e "$HOME/.config" ]
+then
+    echo "mkdir $HOME/.config"
+    mkdir -p $HOME/.config
+fi
+
+for conffile in $(cd $(dirname $0) && pwd)/.config/*
+do
+    echo "symlink from $conffile"
+    ln -Fs $conffile $HOME/.config
+done
+
