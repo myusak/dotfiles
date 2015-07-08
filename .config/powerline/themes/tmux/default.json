@@ -1,24 +1,8 @@
 {
     "segments": {
-        "left": [
-            {
-                "function": "powerline.segments.common.time.date"
-            },
-            {
-                "function": "powerline.segments.common.time.date",
-                "name": "time",
-                "args": {
-                    "format": "%H:%M",
-                    "istime": true
-                }
-            }
-        ],
         "right": [
             {
                 "function": "powerline.segments.common.bat.battery"
-            },
-            {
-                "function": "powerline.segments.common.sys.uptime"
             },
             {
                 "function": "powerline.segments.common.sys.system_load"
@@ -29,6 +13,23 @@
                 "args": {
                     "unit": "C",
                     "location_query": "Tokyo, Japan"
+                }
+            },
+            {
+                "function": "powerline.segments.common.time.date"
+            },
+            {
+                "function": "powerline.segments.common.time.date",
+                "name": "time",
+                "args": {
+                    "format": "%H:%M",
+                    "istime": true
+                }
+            },
+            {
+                "function": "powerline.segments.common.net.hostname",
+                "args": {
+                    "exclude_domain": ".local"
                 }
             }
         ]
