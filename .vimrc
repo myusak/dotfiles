@@ -8,9 +8,6 @@ set nocompatible
 
 syntax on
 
-colorscheme koehler
-
-
 set number
 set nowrap
 
@@ -133,6 +130,7 @@ NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'osyo-manga/vim-watchdogs'
 NeoBundle 'osyo-manga/shabadou.vim'
 NeoBundle 'jceb/vim-hier'
+NeoBundle 'dannyob/quickfixstatus'
 
 " Unite and Unite Sources
 NeoBundle 'Shougo/unite.vim'
@@ -150,6 +148,7 @@ NeoBundle 'osyo-manga/unite-quickrun_config.git'
 " Completion
 NeoBundle 'Shougo/neocomplete.git'
 NeoBundle 'osyo-manga/vim-marching'
+NeoBundle 'osyo-manga/vim-snowdrop'
 
 " vimshell
 NeoBundle 'Shougo/vimshell.git'
@@ -164,6 +163,21 @@ NeoBundle 'tpope/vim-fugitive'
 
 " scala syntax
 NeoBundle 'derekwyatt/vim-scala'
+
+" doxygen plugin
+NeoBundle 'vim-scripts/DoxygenToolkit.vim'
+
+" colorscheme
+NeoBundle 'altercation/vim-colors-solarized'
+NeoBundle 'croaker/mustang-vim'
+NeoBundle 'jeffreyiacono/vim-colors-wombat'
+NeoBundle 'nanotech/jellybeans.vim'
+NeoBundle 'vim-scripts/Lucius'
+NeoBundle 'vim-scripts/Zenburn'
+NeoBundle 'mrkn/mrkn256.vim'
+NeoBundle 'jpo/vim-railscasts-theme'
+NeoBundle 'therubymug/vim-pyte'
+NeoBundle 'tomasr/molokai'
 
 call neobundle#end()
 
@@ -184,8 +198,50 @@ let s:hooks = neobundle#get_hooks("neocomplete")
 function! s:hooks.on_source(bundle)
     let g:neocomplete#enable_at_startup = 1
     let g:neocomplete#enable_smart_case = 1
-    let g:neocomplete#max_list = 30
+    "let g:neocomplete#sources#syntax#min_keyword_length = 3
+    let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
+
+    "let g:neocomplete#max_list = 30
     let g:neocomplete#skip_auto_completion_time = ""
+
+    let g:neocomplete#sources#dictionary#dictionaries = {
+    \   'default'  : '',
+    \   'vimshell' : $HOME . '/.vim/.vimshell_hist',
+    \   'scheme'   : $HOME . '/.vim/.gosh_completions'
+    \}
+
+    if !exists('g:neocomplete#keyword_patterns')
+        let g:neocomplete#keyword_patterns = {}
+    endif
+    let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+
+    inoremap <expr><C-g> neocomplete#undo_completion()
+    inoremap <expr><C-l> neocomplete#complete_common_string()
+
+    inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+    function! s:my_cr_function()
+        return pumvisible() ? neocomplete#close_popup() : "\<CR>"
+    endfunction
+
+    inoremap <expr><Tab> pumvisible() ? "\<Down>" : "\<Tab>"
+    inoremap <expr><S-Tab> pumvisible() ? "\<up>" : "\<S-Tab>"
+    inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+    inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+
+    autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+    autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+    autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+    autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+    autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+
+    " Enable heavy omni completion.
+    if !exists('g:neocomplete#sources#omni#input_patterns')
+      let g:neocomplete#sources#omni#input_patterns = {}
+    endif
+
+    let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+    let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+    let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
 endfunction
 unlet s:hooks
 
@@ -195,13 +251,16 @@ function! s:hooks.on_post_source(bundle)
     let g:marching_clang_command = "clang"
 
     let g:marching#clang_command#options = {
-    \ "cpp" : "-std=c++1y"
+    \   "cpp" : "-std=c++1y"
     \}
 
     let g:marching_include_paths = [
+    \   "/Library/Developer/CommandLineTools/usr/include/c++",
     \   "/usr/local/include",
     \   "/usr/include",
     \]
+
+    imap <buffer> <C-x><C-o> <Plug>(marching_start_omni_complete)
 
     if !neobundle#is_sourced("neocomplete.vim")
         return
@@ -214,6 +273,25 @@ function! s:hooks.on_post_source(bundle)
     endif
 
     let g:neocomplete#force_omni_input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\w*\|\h\w*::\w*'
+endfunction
+unlet s:hooks
+
+" snowdrop
+let s:hooks = neobundle#get_hooks("vim-snowdrop")
+function! s:hooks.on_post_source(bundle)
+    let g:snowdrop#libclang_directory = "/Library/Developer/CommandLineTools/usr/lib"
+
+    let g:snowdrop#include_paths = {
+    \   "cpp": [
+    \       "/Library/Developer/CommandLineTools/usr/include/c++",
+    \       "/usr/local/include",
+    \       "/usr/include",
+    \   ]
+    \}
+
+    let g:snowdrop#command_options = {
+    \   "cpp" : "-std=c++1y",
+    \}
 endfunction
 unlet s:hooks
 
@@ -246,17 +324,19 @@ function! s:hooks.on_source(bundle)
     \ },
     \ "cpp/clang" : {
     \   "command" : "clang++",
-    \   "exec" : "%c %o %s -o %s:p:r ",
+    \   "exec" : "%c %o %s -o %s:p:r",
     \   "cmdopt" : "-Wall -std=c++1y",
     \ },
     \ "cpp/watchdogs_checker" : {
-    \   "type" : "watchdogs_checker/clang++",
-    \   "cmdopt" : "-Wall",
+    \   "type"   : "watchdogs_checker/clang++",
+    \   "cmdopt" : "-Wall -std=c++1y -I . -I %:p:h",
     \ },
     \ "watchdogs_checker/_" : {
     \   "outputter/quickfix/open_cmd" : "",
     \ },
     \ "watchdogs_checker/clang++" : {
+    \   "command" : "clang++",
+    \   "exec"    : "%c %o -fsyntax-only %s:p",
     \ },
     \}
 
@@ -285,12 +365,6 @@ unlet s:hooks
 let s:hooks = neobundle#get_hooks("vimfiler.vim")
 function! s:hooks.on_source(bundle)
     let g:vimfiler_as_default_explorer = 1
-endfunction
-unlet s:hooks
-
-
-let s:hooks = neobundle#get_hooks("powerline")
-function! s:hooks.on_source(bundle)
 endfunction
 unlet s:hooks
 
@@ -325,6 +399,8 @@ noremap ZQ <Nop>
 noremap j gj
 noremap k gk
 
+nnoremap <silent> <C-l> :nohlsearch<CR>
+
 nnoremap [unite] <Nop>
 nmap <Space>u [unite]
 noremap <silent> [unite]q :<C-u>Unite -no-quit qf<CR>
@@ -339,13 +415,6 @@ noremap <silent> [unite]m :<C-u>Unite -no-quit build<CR>
 noremap [quickrun] <Nop>
 nmap <Space>q [quickrun]
 noremap <silent> [quickrun] :<C-u>QuickRun<CR>
-
-inoremap <expr><Tab> pumvisible() ? "\<Down>" : "\<Tab>"
-inoremap <expr><S-Tab> pumvisible() ? "\<up>" : "\<S-Tab>"
-inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-
-imap <buffer> <C-x><C-o> <Plug>(marching_start_omni_complete)
 
 function! s:cpp()
     if has("mac")
@@ -381,3 +450,5 @@ if has("mac")
     python powerline_setup()
     python del powerline_setup
 endif
+
+colorscheme molokai
