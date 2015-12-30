@@ -64,7 +64,7 @@ REPORTTIME=1
 # prompt
 setopt transient_rprompt
 
-PROMPT="[%n@%m - (%D{%c})] %~ 
+PROMPT="[%n@%m - %D{%c}] %~
 %# "
 
 [ -n "${REMOTEHOST}${SSH_CONNECTION}" ] && PROMPT="%BSSH%b ${PROMPT}"
@@ -73,7 +73,12 @@ PROMPT="[%n@%m - (%D{%c})] %~
 [ -f ~/.zshrc.d/.zsh.vcs_info ] && source ~/.zshrc.d/.zsh.vcs_info
 
 # local setting
-[ -f ~/.zshrc.local ] && source ~/.zshrc.local
+unamestr=`uname`
+if [[ "$unamestr" == "Darwin" ]]; then
+    source ~/.zshrc.local.mac
+elif [[ "$unamestr" == "Linux" ]]; then
+    source ~/.zshrc.local.linux
+fi
 
 # alias
 [ -f ~/.zshrc.d/.zsh.alias ] && source ~/.zshrc.d/.zsh.alias

@@ -29,6 +29,8 @@ set tabstop=4 softtabstop=4 shiftwidth=4
 set autoindent
 set smartindent
 
+execute "set colorcolumn=" . join(range(121,999), ",")
+
 augroup vimrc
 autocmd! FileType ruby setlocal shiftwidth=2 tabstop=2 softtabstop=2
 augroup END
@@ -161,7 +163,7 @@ NeoBundle 'tyru/open-browser.vim'
 " git
 NeoBundle 'tpope/vim-fugitive'
 
-" scala syntax
+" syntax
 NeoBundle 'derekwyatt/vim-scala'
 
 " doxygen plugin
@@ -179,12 +181,31 @@ NeoBundle 'jpo/vim-railscasts-theme'
 NeoBundle 'therubymug/vim-pyte'
 NeoBundle 'tomasr/molokai'
 
+" appearance
+NeoBundle 'itchyny/lightline.vim'
+
 call neobundle#end()
 
 filetype plugin on
 filetype indent on
 
 NeoBundleCheck
+
+let g:lightline = {
+      \ 'colorscheme': 'wombat',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'fugitive', 'filename' ] ]
+      \ },
+      \ 'component_function': {
+      \   'fugitive': 'LightLineFugitive',
+      \   'readonly': 'LightLineReadonly',
+      \   'modified': 'LightLineModified',
+      \   'filename': 'LightLineFilename'
+      \ },
+      \ 'separator': { 'left': "\ue0b0", 'right': "\ue0b2" },
+      \ 'subseparator': { 'left': "\ue0b1", 'right': "\ue0b3" }
+      \ }
 
 " neomru
 let s:hooks = neobundle#get_hooks("neomru.vim")
@@ -427,28 +448,35 @@ augroup vimrc-cpp
     autocmd FileType cpp call s:cpp()
 augroup END
 
-set completefunc=GoogleComplete
-function! GoogleComplete(findstart, base)
-    if a:findstart
-        let line = getline('.')
-        let start = col('.') - 1
-        while start > 0 && line[start - 1] =~ '\S'
-            let start -= 1
-        endwhile
-        return start
-    else
-        let ret = system('curl -s -G --data-urlencode "q='
-                    \ . a:base . '" "http://suggestqueries.google.com/complete/search?&client=firefox&hl=ja&ie=utf8&oe=utf8"')
-        let res = split(substitute(ret,'\[\|\]\|"',"","g"),",")
-        return res
-    endif
+function! LightLineModified()
+  if &filetype == "help"
+    return ""
+  elseif &modified
+    return "+"
+  elseif &modifiable
+    return ""
+  else
+    return ""
+  endif
 endfunction
 
-" powerline config
-if has("mac")
-    python from powerline.vim import setup as powerline_setup
-    python powerline_setup()
-    python del powerline_setup
-endif
+function! LightLineReadonly()
+  if &filetype == "help"
+    return ""
+  elseif &readonly
+    return "⭤"
+  else
+    return ""
+  endif
+endfunction
 
+function! LightLineFugitive()
+  return exists('*fugitive#head') ? fugitive#head() : ''
+endfunction
+
+function! LightLineFilename()
+  return ('' != LightLineReadonly() ? LightLineReadonly() . ' ' : '') .
+       \ ('' != expand('%:t') ? expand('%:t') : '[No Name]') .
+       \ ('' != LightLineModified() ? ' ' . LightLineModified() : '')
+endfunction
 colorscheme molokai
