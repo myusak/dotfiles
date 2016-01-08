@@ -1,10 +1,9 @@
 scriptencoding utf8
+set nocompatible
 
 set term=screen-256color
 
 set guioptions-=M
-
-set nocompatible
 
 syntax on
 
@@ -29,7 +28,7 @@ set tabstop=4 softtabstop=4 shiftwidth=4
 set autoindent
 set smartindent
 
-execute "set colorcolumn=" . join(range(121,999), ",")
+set colorcolumn=121
 
 augroup vimrc
 autocmd! FileType ruby setlocal shiftwidth=2 tabstop=2 softtabstop=2
@@ -45,6 +44,7 @@ au BufRead, BufNewFile *.md set filetype=markdown
 set list
 set listchars=tab:=-,trail:-
 
+set showtabline=2
 set showcmd
 set laststatus=2
 set noshowmode

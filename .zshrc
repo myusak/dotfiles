@@ -48,6 +48,8 @@ zstyle ':zle:*' word-style unspecified
 export LSCOLORS=gxfxxxxxcxxxxxxxxxgxgx
 export LS_COLORS='di=01;36:ln=01;35:ex=01;32'
 
+export EDITOR=vim
+
 # misc
 setopt no_beep
 setopt print_eight_bit
@@ -58,6 +60,7 @@ setopt magic_equal_subst
 setopt long_list_jobs
 
 REPORTTIME=1
+
 #
 # prompt
 setopt transient_rprompt
