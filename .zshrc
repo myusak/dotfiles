@@ -1,5 +1,3 @@
-export LANG=en_US.UTF-8
-
 # vi bind
 bindkey -v
 # enable shift tab

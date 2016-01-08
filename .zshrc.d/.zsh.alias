@@ -1,6 +1,6 @@
 alias less='less -N'
 
-alias ls='ls --color=always'
+alias ls='ls --color=always --group-directories-first'
 alias ll='ls -lshF'
 alias la='ls -lshFA'
 alias l='ls -CF'

@@ -35,6 +35,10 @@ augroup vimrc
 autocmd! FileType ruby setlocal shiftwidth=2 tabstop=2 softtabstop=2
 augroup END
 
+augroup vimrc
+autocmd! FileType sh setlocal noexpandtab
+augroup END
+
 " set filetype markdown when the file extension is .md
 au BufRead, BufNewFile *.md set filetype=markdown
 
