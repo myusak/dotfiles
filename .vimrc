@@ -1,8 +1,6 @@
 scriptencoding utf8
 set nocompatible
 
-set term=screen-256color
-
 set guioptions-=M
 
 syntax on
