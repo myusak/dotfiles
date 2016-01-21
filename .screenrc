@@ -1,4 +1,6 @@
-hardstatus alwayslastline "%{= rw} %H %{= wk}%-Lw%{= bw}%n%f* %t%{= wk}%+Lw %{= wk}%=%{= gk} %y/%m/%d %c "
+term xterm-256color
+
+hardstatus alwayslastline '%{= kw}%02c:%s %{= .y}%H %L=%{= .b}%-w%46>%{= .r}%n %t*%{= .b}%+w%-16=%{= .y}[%l]'
 autodetach on
 
 # scrollback buffer size
@@ -8,3 +10,5 @@ defscrollback 10000
 termcapinfo xterm* ti@:te@
 
 startup_message off
+
+altscreen on
