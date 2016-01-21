@@ -35,7 +35,7 @@ autocmd! FileType ruby setlocal shiftwidth=2 tabstop=2 softtabstop=2
 augroup END
 
 augroup vimrc
-autocmd! FileType sh setlocal noexpandtab
+autocmd! FileType sh,zsh setlocal noexpandtab
 augroup END
 
 " set filetype markdown when the file extension is .md
