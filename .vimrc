@@ -9,6 +9,7 @@ set number
 set nowrap
 
 set cursorline
+set splitbelow
 
 set encoding=utf-8
 set fileencodings=utf-8,iso-2022-jp,euc-jp,sjis
@@ -16,7 +17,7 @@ set fileformats=unix,dos,mac
 
 set spelllang=en,cjk
 
-" vim reloads files when the files are changed
+" enable vim to reload a file when the file is modified
 set autoread
 
 set hidden
@@ -39,8 +40,8 @@ augroup END
 " set filetype markdown when the file extension is .md
 au BufRead, BufNewFile *.md set filetype=markdown
 
-set list
-set listchars=tab:=-,trail:-
+"set list
+"set listchars=tab:=-,trail:-
 
 set showtabline=2
 set showcmd
@@ -65,7 +66,7 @@ set backupdir=~/.vim/.vimbackup
 
 set undodir=~/.vim/.vimundo
 
-" enable erase, concat lines, indent delete with backspace key
+" enable to erase/concat lines/delete with backspace key
 set backspace=start,eol,indent
 
 " command completion
@@ -129,6 +130,8 @@ NeoBundle 'Shougo/vimproc', {
 \    },
 \ }
 
+NeoBundle 'tpope/vim-surround'
+
 " QuickRun
 NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'osyo-manga/vim-watchdogs'
@@ -185,6 +188,7 @@ NeoBundle 'tomasr/molokai'
 
 " appearance
 NeoBundle 'itchyny/lightline.vim'
+NeoBundle 'ntpeters/vim-better-whitespace'
 
 call neobundle#end()
 
@@ -221,10 +225,8 @@ let s:hooks = neobundle#get_hooks("neocomplete")
 function! s:hooks.on_source(bundle)
     let g:neocomplete#enable_at_startup = 1
     let g:neocomplete#enable_smart_case = 1
-    "let g:neocomplete#sources#syntax#min_keyword_length = 3
     let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
 
-    "let g:neocomplete#max_list = 30
     let g:neocomplete#skip_auto_completion_time = ""
 
     let g:neocomplete#sources#dictionary#dictionaries = {
@@ -243,27 +245,26 @@ function! s:hooks.on_source(bundle)
 
     inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
     function! s:my_cr_function()
-        return pumvisible() ? neocomplete#close_popup() : "\<CR>"
+        return pumvisible() ? "\<C-y>" : "\<CR>"
     endfunction
 
-    inoremap <expr><Tab> pumvisible() ? "\<Down>" : "\<Tab>"
-    inoremap <expr><S-Tab> pumvisible() ? "\<up>" : "\<S-Tab>"
+    inoremap <expr><Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+    inoremap <expr><S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
     inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-    inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+    inoremap <expr><BS>  neocomplete#smart_close_popup()."\<C-h>"
 
-    autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+    autocmd FileType css           setlocal omnifunc=csscomplete#CompleteCSS
     autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-    autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-    autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-    autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+    autocmd FileType javascript    setlocal omnifunc=javascriptcomplete#CompleteJS
+    autocmd FileType python        setlocal omnifunc=pythoncomplete#Complete
+    autocmd FileType xml           setlocal omnifunc=xmlcomplete#CompleteTags
 
     " Enable heavy omni completion.
     if !exists('g:neocomplete#sources#omni#input_patterns')
       let g:neocomplete#sources#omni#input_patterns = {}
     endif
 
-    let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-    let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+    let g:neocomplete#sources#omni#input_patterns.c   = '[^.[:digit:] *\t]\%(\.\|->\)'
     let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
 endfunction
 unlet s:hooks
@@ -271,30 +272,28 @@ unlet s:hooks
 " marching
 let s:hooks = neobundle#get_hooks("vim-marching")
 function! s:hooks.on_post_source(bundle)
+
     let g:marching_clang_command = "clang"
+    let g:marching_enable_neocomplete = 1
+    let g:marching_enable_auto_select = 0
+    let g:marching_enable_refresh_always = 0
 
     let g:marching#clang_command#options = {
     \   "cpp" : "-std=c++1y"
     \}
 
-    let g:marching_include_paths = [
-    \   "/Library/Developer/CommandLineTools/usr/include/c++",
-    \   "/usr/local/include",
-    \   "/usr/include",
-    \]
+    let g:marching_include_paths = filter(
+                \   split(glob('/usr/include/c++/*'), '\n') +
+                \   split(glob('/usr/include/*/c++/*'), '\n') +
+                \   split(glob('/usr/include/*/'), '\n') +
+                \   split(glob('/usr/local/include/'), '\n'),
+                \   'isdirectory(v:val)')
 
-    imap <buffer> <C-x><C-o> <Plug>(marching_start_omni_complete)
-
-    if !neobundle#is_sourced("neocomplete.vim")
-        return
-    endif
-
-    let g:marching_enable_neocomplete = 1
+    imap <buffer> <C-x><C-o> <Plug>(marching_force_start_omni_complete)
 
     if !exists('g:neocomplete#force_omni_input_patterns')
         let g:neocomplete#force_omni_input_patterns = {}
     endif
-
     let g:neocomplete#force_omni_input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\w*\|\h\w*::\w*'
 endfunction
 unlet s:hooks
@@ -302,6 +301,10 @@ unlet s:hooks
 " snowdrop
 let s:hooks = neobundle#get_hooks("vim-snowdrop")
 function! s:hooks.on_post_source(bundle)
+    if !has("mac") 
+        return
+    endif
+
     let g:snowdrop#libclang_directory = "/Library/Developer/CommandLineTools/usr/lib"
 
     let g:snowdrop#include_paths = {
@@ -330,6 +333,10 @@ unlet s:hooks
 " quickrun
 let s:hooks = neobundle#get_hooks("vim-quickrun")
 function! s:hooks.on_source(bundle)
+    if !executable("clang")
+        return
+    endif
+
     let g:quickrun_config = {
     \ "_" : {
     \   "outputter" : "error",
@@ -439,9 +446,23 @@ noremap [quickrun] <Nop>
 nmap <Space>q [quickrun]
 noremap <silent> [quickrun] :<C-u>QuickRun<CR>
 
+augroup vimrc-local
+    autocmd!
+    autocmd BufNewFile,BufReadPost * call s:vimrc_local(expand('<afile>:p:h'))
+augroup END
+
+function! s:vimrc_local(loc)
+    let files = findfile('.vimrc.local', escape(a:loc, ' ') . ';', -1)
+    for i in reverse(filter(files, 'filereadable(v:val)'))
+        source `=i`
+    endfor
+endfunction
+
 function! s:cpp()
+    setlocal path+=/usr/include,/usr/local/include
+
     if has("mac")
-        setlocal path+=/Library/Developer/CommandLineTools/usr/bin/../include/c++/v1,/usr/local/include,/Library/Developer/CommandLineTools/usr/bin/../lib/clang/6.0/include,/Library/Developer/CommandLineTools/usr/include,/usr/include,/System/Library/Frameworks,/Library/Frameworks 
+        setlocal path+=/Library/Developer/CommandLineTools/usr/include/c++/v1
     endif
 endfunction
 
