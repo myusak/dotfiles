@@ -68,7 +68,7 @@ setopt transient_rprompt
 PROMPT="[%n@%m - %D{%c}] %~
 %# "
 
-[ -n "${REMOTEHOST}${SSH_CONNECTION}" ] && PROMPT="%BSSH%b ${PROMPT}"
+[ -n "${REMOTEHOST}${SSH_CONNECTION}" ] && PROMPT="%B[REMOTE SSH]%b ${PROMPT}"
 
 # show vcs information on the right prompt
 [ -f ~/.zshrc.d/.zsh.vcs_info ] && source ~/.zshrc.d/.zsh.vcs_info
