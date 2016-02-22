@@ -6,6 +6,8 @@ export POWERLINE_ROOT="$HOME/Library/Python/2.7/lib/python/site-packages/powerli
 
 export ANDROID_HOME=~/Library/Android/sdk
 export PATH="$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$PATH"
+export JAVA_HOME=$(/usr/libexec/java_home -v "1.7")
+export PATH=$JAVA_HOME/bin:$PATH
 
 alias find='gfind'
 alias xargs='gxargs'

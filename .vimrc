@@ -47,6 +47,8 @@ set showtabline=2
 set showcmd
 set laststatus=2
 set noshowmode
+set list
+set listchars=tab:=-
 
 set mouse=a
 set textwidth=0
@@ -113,6 +115,11 @@ if !isdirectory(s:neobundle_plugins_dir . "/neobundle.vim")
     finish
 endif
 
+function! s:meet_neocomplete_requirements()
+    return has('lua') && (v:version > 703 || (v:version == 703 && has('patch885')))
+endfunction
+
+
 if has('vim_starting')
     execute "set runtimepath+=" . s:neobundle_plugins_dir . "/neobundle.vim"
 endif
@@ -152,9 +159,10 @@ NeoBundle 'sgur/unite-qf'
 NeoBundle 'tsukkee/unite-tag.git'
 NeoBundle 'osyo-manga/unite-quickrun_config.git'
 
-" Completion
+" Neocomplete
 NeoBundle 'Shougo/neocomplete.git'
 NeoBundle 'osyo-manga/vim-marching'
+NeoBundle 'ujihisa/neco-look'
 NeoBundle 'osyo-manga/vim-snowdrop'
 
 " vimshell
@@ -197,6 +205,20 @@ filetype indent on
 
 NeoBundleCheck
 
+if !exists('g:neocomplete#text_mode_filetypes')
+    let g:neocomplete#text_mode_filetypes = {}
+endif
+let g:neocomplete#text_mode_filetypes = {
+            \ 'rst': 1,
+            \ 'markdown': 1,
+            \ 'gitrebase': 1,
+            \ 'gitcommit': 1,
+            \ 'vcs-commit': 1,
+            \ 'hybrid': 1,
+            \ 'text': 1,
+            \ 'help': 1,
+            \ 'tex': 1,
+            \ }
 let g:lightline = {
       \ 'colorscheme': 'wombat',
       \ 'active': {
@@ -223,6 +245,10 @@ unlet s:hooks
 " neocomplete
 let s:hooks = neobundle#get_hooks("neocomplete")
 function! s:hooks.on_source(bundle)
+    if !s:meet_neocomplete_requirements()
+        return
+    endif
+
     let g:neocomplete#enable_at_startup = 1
     let g:neocomplete#enable_smart_case = 1
     let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
@@ -272,6 +298,9 @@ unlet s:hooks
 " marching
 let s:hooks = neobundle#get_hooks("vim-marching")
 function! s:hooks.on_post_source(bundle)
+    if !executable("clang")
+        return
+    endif
 
     let g:marching_clang_command = "clang"
     let g:marching_enable_neocomplete = 1
@@ -359,7 +388,7 @@ function! s:hooks.on_source(bundle)
     \ },
     \ "cpp/watchdogs_checker" : {
     \   "type"   : "watchdogs_checker/clang++",
-    \   "cmdopt" : "-Wall -std=c++1y -I . -I %:p:h",
+    \   "cmdopt" : "-Wall -std=c++1y -I . -I %:p:h -I " . eval("&path"),
     \ },
     \ "watchdogs_checker/_" : {
     \   "outputter/quickfix/open_cmd" : "",
