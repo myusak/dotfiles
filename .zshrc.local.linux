@@ -1,5 +1,5 @@
 export POWERLINE_ROOT="$HOME/.local/lib/python2.7/site-packages/powerline"
-export PATH="$PATH:$HOME/.local/bin"
+export PATH="$HOME/.local/bin:$PATH"
 
 alias pbcopy='xclip -selection clipboard'
 alias pbpaste='xclip -selection clipboard -o'
