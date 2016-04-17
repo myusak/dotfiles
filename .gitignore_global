@@ -49,3 +49,4 @@ cscope.po.out
 Session.vim
 .netrwhist
 *~
+.vimrc.local

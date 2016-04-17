@@ -42,6 +42,15 @@ zstyle ':completion:*:process' command 'ps x -o pid,s,args'
 autoload -Uz select-word-style
 select-word-style default
 
+autoload -Uz colors
+colors
+
+autoload history-search-end
+zle -N history-beginning-search-backward-end history-search-end
+zle -N history-beginning-search-forward-end history-search-end
+bindkey "^P" history-beginning-search-backward-end
+bindkey "^N" history-beginning-search-forward-end
+
 zstyle ':zle:*' word-chars " /=;@:{},|"
 zstyle ':zle:*' word-style unspecified
 
@@ -65,10 +74,26 @@ REPORTTIME=1
 # prompt
 setopt transient_rprompt
 
-PROMPT="[%n@%m - %D{%c}] %~
+function zle-line-init zle-keymap-select {
+	# color of words between ${fg[COLOR]} and ${reset_color} will be changed
+	case $KEYMAP in
+		vicmd)
+PROMPT="[${fg[cyan]}NORMAL${reset_color} %n@%m %D{%c}] %~
 %# "
+		;;
+		main|viins)
+PROMPT="[${fg[green]}INSERT${reset_color} %n@%m %D{%c}] %~
+%# "
+		;;
+	esac
 
-[ -n "${REMOTEHOST}${SSH_CONNECTION}" ] && PROMPT="%B[REMOTE SSH]%b ${PROMPT}"
+	[ -n "${REMOTEHOST}${SSH_CONNECTION}" ] && PROMPT="%B[REMOTE SSH]%b ${PROMPT}"
+
+	zle reset-prompt
+}
+
+zle -N zle-line-init
+zle -N zle-keymap-select
 
 # show vcs information on the right prompt
 [ -f ~/.zshrc.d/.zsh.vcs_info ] && source ~/.zshrc.d/.zsh.vcs_info
