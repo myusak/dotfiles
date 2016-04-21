@@ -87,7 +87,7 @@ PROMPT="[${fg[green]}INSERT${reset_color} %n@%m %D{%c}] %~
 		;;
 	esac
 
-	[ -n "${REMOTEHOST}${SSH_CONNECTION}" ] && PROMPT="%B[REMOTE SSH]%b ${PROMPT}"
+	[ -n "${REMOTEHOST}${SSH_CONNECTION}" ] && PROMPT="[${fg[red]}%BREMOTE%b${reset_color}] ${PROMPT}"
 
 	zle reset-prompt
 }
