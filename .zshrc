@@ -78,16 +78,23 @@ function zle-line-init zle-keymap-select {
 	# color of words between ${fg[COLOR]} and ${reset_color} will be changed
 	case $KEYMAP in
 		vicmd)
-PROMPT="[${fg[cyan]}NORMAL${reset_color} %n@%m %D{%c}] %~
-%# "
+			mode="%F{cyan}NORMAL%f"
 		;;
 		main|viins)
-PROMPT="[${fg[green]}INSERT${reset_color} %n@%m %D{%c}] %~
-%# "
+			mode="%F{green}INSERT%f"
 		;;
 	esac
 
-	[ -n "${REMOTEHOST}${SSH_CONNECTION}" ] && PROMPT="[${fg[red]}%BREMOTE%b${reset_color}] ${PROMPT}"
+	# %n: user name
+	# %m: hostname
+	# %W: date (mm/dd/yy)
+	# %*: time (hh:mm:ss)
+	# %~: current directory
+	# %#: user type (root: #, other: %)
+	PROMPT="[$mode %n@%m %W %*] %~
+%# "
+
+	[ -n "${REMOTEHOST}${SSH_CONNECTION}" ] && PROMPT="[%F{red}%BREMOTE%b%f] ${PROMPT}"
 
 	zle reset-prompt
 }
