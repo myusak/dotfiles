@@ -91,10 +91,12 @@ function zle-line-init zle-keymap-select {
 	# %*: time (hh:mm:ss)
 	# %~: current directory
 	# %#: user type (root: #, other: %)
-	PROMPT="[$mode %n@%m %W %*] %~
+	PROMPT="[$mode][%n@%m %W %*] %~
 %# "
 
-	[ -n "${REMOTEHOST}${SSH_CONNECTION}" ] && PROMPT="[%F{red}%BREMOTE%b%f] ${PROMPT}"
+	[ -n "$STY" ] && PROMPT="[%F{yellow}SCREEN%f]${PROMPT}"
+
+	[ -n "${REMOTEHOST}${SSH_CONNECTION}" ] && PROMPT="[%F{red}%BREMOTE%b%f]${PROMPT}"
 
 	zle reset-prompt
 }
