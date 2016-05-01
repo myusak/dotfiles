@@ -37,8 +37,14 @@ augroup vimrc
 autocmd! FileType sh,zsh setlocal noexpandtab
 augroup END
 
+augroup vimrc
+autocmd! FileType rst,markdown,gitrebase,gitcommit,vcs-commit,hybrid,text,help,tex set spell
+augroup END
+
 " set filetype markdown when the file extension is .md
 au BufRead, BufNewFile *.md set filetype=markdown
+
+let g:tex_flavor = "latex"
 
 "set list
 "set listchars=tab:=-,trail:-
@@ -158,6 +164,7 @@ NeoBundle 'kmnk/vim-unite-giti'
 NeoBundle 'sgur/unite-qf'
 NeoBundle 'tsukkee/unite-tag.git'
 NeoBundle 'osyo-manga/unite-quickrun_config.git'
+NeoBundle 'kopischke/unite-spell-suggest'
 
 " Neocomplete
 NeoBundle 'Shougo/neocomplete.git'
@@ -205,20 +212,6 @@ filetype indent on
 
 NeoBundleCheck
 
-if !exists('g:neocomplete#text_mode_filetypes')
-    let g:neocomplete#text_mode_filetypes = {}
-endif
-let g:neocomplete#text_mode_filetypes = {
-            \ 'rst': 1,
-            \ 'markdown': 1,
-            \ 'gitrebase': 1,
-            \ 'gitcommit': 1,
-            \ 'vcs-commit': 1,
-            \ 'hybrid': 1,
-            \ 'text': 1,
-            \ 'help': 1,
-            \ 'tex': 1,
-            \ }
 let g:lightline = {
       \ 'colorscheme': 'wombat',
       \ 'active': {
@@ -292,6 +285,22 @@ function! s:hooks.on_source(bundle)
 
     let g:neocomplete#sources#omni#input_patterns.c   = '[^.[:digit:] *\t]\%(\.\|->\)'
     let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+
+
+    if !exists('g:neocomplete#text_mode_filetypes')
+        let g:neocomplete#text_mode_filetypes = {}
+    endif
+    let g:neocomplete#text_mode_filetypes = {
+                \ 'rst': 1,
+                \ 'markdown': 1,
+                \ 'gitrebase': 1,
+                \ 'gitcommit': 1,
+                \ 'vcs-commit': 1,
+                \ 'hybrid': 1,
+                \ 'text': 1,
+                \ 'help': 1,
+                \ 'tex': 1,
+                \ }
 endfunction
 unlet s:hooks
 
@@ -470,6 +479,7 @@ noremap <silent> [unite]o :<C-u>Unite outline -no-quit<CR>
 noremap <silent> [unite]t :<C-u>Unite -buffer-name=tabs tab<CR>
 noremap <silent> [unite]r :<C-u>Unite -buffer-name=registers register<CR>
 noremap <silent> [unite]m :<C-u>Unite -no-quit build<CR>
+noremap <silent> [unite]z :<C-u>Unite spell_suggest<CR>
 
 noremap [quickrun] <Nop>
 nmap <Space>q [quickrun]
@@ -531,4 +541,8 @@ function! LightLineFilename()
        \ ('' != expand('%:t') ? expand('%:t') : '[No Name]') .
        \ ('' != LightLineModified() ? ' ' . LightLineModified() : '')
 endfunction
+
 colorscheme molokai
+
+hi MatchParen ctermfg=white ctermbg=red
+hi SpellBad cterm=bold,italic
