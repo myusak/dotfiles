@@ -32,3 +32,7 @@ do
 	ln -Fs $conffile $HOME/.config
 done
 
+if [ -e tmux-powerline ] && [ -d tmux-powerline ];
+then
+	ln -Fs $PWD/tmux-powerline $HOME/.tmux-powerline
+fi

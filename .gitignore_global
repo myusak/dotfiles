@@ -50,3 +50,9 @@ Session.vim
 .netrwhist
 *~
 .vimrc.local
+### https://raw.github.com/github/gitignore/8f35779cefbabdca21cfc4cda55abb1290d59fd9/Global/IPythonNotebook.gitignore
+
+# Temporary data
+.ipynb_checkpoints/
+
+
