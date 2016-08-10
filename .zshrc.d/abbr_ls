@@ -1,4 +1,6 @@
-function abbr_ls() {
+## vim:ft=zsh
+## function abbr_ls() {
+
 	local cmd_ls='ls'
 	local -a opt_ls
 	opt_ls=('-aCF' '--color=always')
@@ -26,25 +28,5 @@ function abbr_ls() {
 		echo "$ls_result"
 	fi
 
-	echo "$(command ls -1 -A | wc -l | tr -d ' ') file/s exist"
-}
-
-function on_empty_enter() {
-	if [ -n "$BUFFER" ]; then
-		zle accept-line
-		return 0
-	fi
-
-	echo
-	abbr_ls
-
-	if [ "$(git rev-parse --is-inside-work-tree 2> /dev/null)" = 'true' ]; then
-		echo
-		echo -e "\e[0;33m--- git status ---\e[0m"
-		git status -sb
-	fi
-	zle reset-prompt
-	return 0
-}
-
-
+	echo "$(command ls -1 -A | wc -l | tr -d ' ') file/s"
+## }
