@@ -3,8 +3,6 @@ export EDITOR=vim
 export LSCOLORS=gxfxxxxxcxxxxxxxxxgxgx
 export LS_COLORS='di=01;36:ln=01;35:ex=01;32'
 
-source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
 if [[ -d $HOME/.zshrc.d ]];
 then
 	FPATH=$HOME/.zshrc.d:$FPATH
@@ -140,3 +138,15 @@ zle -N zle-line-init
 zle -N zle-keymap-select
 zle -N on_empty_enter
 bindkey '^m' on_empty_enter
+
+if [ -e ~/.antigen ];
+then
+	source ~/.antigen/antigen.zsh
+
+	antigen bundle zsh-users/zsh-syntax-highlighting
+	antigen bundle zsh-users/zsh-completions
+	antigen bundle zsh-users/zsh-autosuggestions
+
+	antigen apply
+fi
+

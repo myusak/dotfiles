@@ -28,3 +28,8 @@ if [ -e tmux-powerline ] && [ -d tmux-powerline ];
 then
 	ln -Fs $PWD/tmux-powerline $HOME/.tmux-powerline
 fi
+
+if [ -e antigen ] && [ -d antigen ];
+then
+	ln -Fs $PWD/antigen $HOME/.antigen
+fi
