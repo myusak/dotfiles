@@ -150,3 +150,9 @@ then
 	antigen apply
 fi
 
+# local rc will override configurations
+if [[ -e $HOME/.zshrc.local ]];
+then
+	source $HOME/.zshrc.local
+fi
+
