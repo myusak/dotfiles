@@ -185,6 +185,7 @@ NeoBundle 'tpope/vim-fugitive'
 
 " syntax
 NeoBundle 'derekwyatt/vim-scala'
+NeoBundle 'chikamichi/mediawiki.vim'
 
 " doxygen plugin
 NeoBundle 'vim-scripts/DoxygenToolkit.vim'
