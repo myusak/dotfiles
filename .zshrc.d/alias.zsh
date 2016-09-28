@@ -1,6 +1,6 @@
 alias less='less -N -r'
 
-alias grep='grep --color=auto'
+alias grep='grep -n --color=auto'
 
 alias ...='../..'
 alias ....='../../..'
