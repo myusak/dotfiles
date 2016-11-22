@@ -84,6 +84,8 @@ set matchpairs+=<:>
 
 set updatetime=200
 
+source $VIMRUNTIME/macros/matchit.vim
+
 " Note: skip initialization for vim-tiny or vim-small
 if !1 | finish | endif
 
