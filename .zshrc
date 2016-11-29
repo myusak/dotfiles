@@ -101,9 +101,20 @@ function zle-line-init zle-keymap-select {
 	# %*: time (hh:mm:ss)
 	# %~: current directory
 	# %#: user type (root: #, other: %)
+
+	if [ -n "${REMOTEHOST}${SSH_CONNECTION}" ]; then
+
+	PROMPT="
+<$mode> (%D %*) <%?> [%~]
+%F{yellow}%m%f %# "
+
+	else
+
 	PROMPT="
 <$mode> (%D %*) <%?> [%~]
 %F{cyan}%m%f %# "
+
+	fi
 
 	#[ -n "$STY" ] && PROMPT="[%F{yellow}SCREEN%f]${PROMPT}"
 
