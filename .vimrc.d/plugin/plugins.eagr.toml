@@ -1,0 +1,86 @@
+[[plugins]]
+repo = 'Shougo/dein.vim'
+
+[[plugins]]
+repo = 'Shougo/unite.vim'
+hook_add = 'call plugins#init#unite#hook_add()'
+
+[[plugins]]
+repo = 'Shougo/neomru.vim'
+depends = ['unite.vim']
+
+[[plugins]]
+repo = 'Shougo/vimproc.vim'
+hook_post_update = 'call plugins#init#vimproc#hook_post_update()'
+
+[[plugins]]
+# better word object handling
+repo = 'tpope/vim-surround'
+
+[[plugins]]
+# better status bar
+repo = 'itchyny/lightline.vim'
+hook_add = 'call plugins#init#lightline#hook_add()'
+
+[[plugins]]
+# git in vim
+repo = 'tpope/vim-fugitive'
+
+[[plugins]]
+repo = 'cespare/vim-toml'
+
+[[plugins]]
+repo = 'derekwyatt/vim-scala'
+
+[[plugins]]
+repo = 'chikamichi/mediawiki.vim'
+
+[[plugins]]
+# plugin for handling extra whitespaces
+repo = 'ntpeters/vim-better-whitespace'
+
+[[plugins]]
+# color scheme
+repo = 'tomasr/molokai'
+
+#" QuickRun
+#NeoBundle 'thinca/vim-quickrun'
+#NeoBundle 'osyo-manga/vim-watchdogs'
+#NeoBundle 'osyo-manga/shabadou.vim'
+#NeoBundle 'jceb/vim-hier'
+#NeoBundle 'dannyob/quickfixstatus'
+#
+#" Unite and Unite Sources
+#NeoBundle 'Shougo/unite.vim'
+#NeoBundle 'Shougo/unite-outline'
+#NeoBundle 'Shougo/unite-build'
+#NeoBundle 'Shougo/neossh.vim'
+#NeoBundle 'Shougo/vimfiler.vim'
+#NeoBundle 'ujihisa/unite-colorscheme'
+#NeoBundle 'kmnk/vim-unite-giti'
+#NeoBundle 'sgur/unite-qf'
+#NeoBundle 'tsukkee/unite-tag.git'
+#NeoBundle 'osyo-manga/unite-quickrun_config.git'
+#NeoBundle 'kopischke/unite-spell-suggest'
+#
+#" Neocomplete
+#NeoBundle 'Shougo/neocomplete.git'
+#NeoBundle 'osyo-manga/vim-marching'
+#NeoBundle 'ujihisa/neco-look'
+#NeoBundle 'osyo-manga/vim-snowdrop'
+#
+#" vimshell
+#NeoBundle 'Shougo/vimshell.git'
+#
+#" markdown
+#NeoBundle 'plasticboy/vim-markdown'
+#NeoBundle 'kannokanno/previm'
+#NeoBundle 'tyru/open-browser.vim'
+
+#" doxygen plugin
+#NeoBundle 'vim-scripts/DoxygenToolkit.vim'
+
+#" appearance
+#NeoBundle
+#
+#
