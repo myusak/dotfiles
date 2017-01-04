@@ -1,7 +1,7 @@
 #
 # MacOS X
 #
-
+*.bak
 .DS_Store
 .AppleDouble
 .LSOverride
