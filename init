@@ -1,0 +1,7 @@
+#!/usr/bin/env zsh
+
+. .init.d/vim
+. .init.d/symlink
+
+create_symlink $(cd $(dirname $0) && pwd)
+

@@ -1,0 +1,11 @@
+## vim:ft=zsh
+
+function create_symlink() {
+	local base_dir=$1
+	local dotfiles=(".vimrc" ".vimrc.d" ".zshrc" ".zshrc.d" ".screenrc")
+
+	for dotfile in $dotfiles; do
+		echo "Create symlink from $base_dir/$dotfile to $HOME"
+		ln -Fs "$base_dir/$dotfile" $HOME
+	done
+}

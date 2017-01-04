@@ -21,5 +21,3 @@ then
 	export PATH="$(brew --prefix go-gui)/GoGui.app/Contents/bin:$PATH"
 fi
 
-eval "$(direnv hook zsh)"
-

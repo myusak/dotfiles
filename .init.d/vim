@@ -1,0 +1,14 @@
+## vim:ft=zsh
+
+function make_vimdir() {
+	local vimdirs=(".vimswap" ".vimundo" ".vimbackup")
+
+	for vimdir in $vimdirs; do
+		if [ ! -e "$HOME/.vim/$vimdir" ]; then
+			echo "Create $HOME/.vim/$vimdir"
+			mkdir -p "$HOME/.vim/$vimdir"
+		fi
+	done
+}
+
+make_vimdir
