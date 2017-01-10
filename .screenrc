@@ -1,5 +1,7 @@
 term xterm-256color
 
+escape ^Tt
+
 hardstatus alwayslastline '%{= kw}%02c:%s %{= .y}%H %L=%{= .b}%-w%46>%{= .r}%n %t*%{= .b}%+w%-16=%{= .y}[%l]'
 autodetach on
 
