@@ -1,10 +1,16 @@
 ## vim:ft=zsh
 
 function install_tpm() {
-	mkdir -p $HOME/.tmux/plugins
-	git clone https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm
+	if [ ! -e $HOME/.tmux/plugins/tpm ]; then
+		echo "Install Tmux Plugin Manager"
+		mkdir -p $HOME/.tmux/plugins
+		git clone https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm
+	fi
 }
 
-if [ ! -e $HOME/.tmux/plugins/tpm ]; then
-	install_tpm
-fi
+function remove_tpm() {
+	if [ -e $HOME/.tmux/plugins/tpm ]; then
+		echo "Remove Tmux Plugin Manager"
+		rm -rf $HOME/.tmux/plugins/tpm
+	fi
+}

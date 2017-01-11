@@ -1,14 +1,16 @@
 #!/usr/bin/env zsh
 
-if type git > /dev/null; then
+if ! type git > /dev/null; then
 	echo "git not found. abort"
 	exit 1
 fi
 
-. .init.d/vim
-. .init.d/symlink
-. .init.d/tpm
-. .initd./zplug
+source .init.d/include
 
 create_symlink $(cd $(dirname $0) && pwd)
+
+make_vimdir
+
+install_zplug
+install_tpm
 

@@ -1,0 +1,6 @@
+## vim:ft=zsh
+
+. .init.d/vim
+. .init.d/symlink
+. .init.d/tpm
+. .init.d/zplug

@@ -1,18 +1,31 @@
 ## vim:ft=zsh
 
-function create_symlink() {
-	local common=(".vimrc" ".vimrc.d" ".zshrc" ".zshrc.d")
-	local darwin=(".tmux.conf")
-	local linux=(".screenrc")
+COMMON_RC=(".vimrc" ".vimrc.d" ".zshrc" ".zshrc.d" ".gitignore_global")
+DARWIN_RC=(".tmux.conf")
+LINUX_RC=(".screenrc")
 
-	create_symlink_impl $1 $common
+function create_symlink() {
+	create_symlink_impl $1 $COMMON_RC
 
 	case ${OSTYPE} in
 		darwin*)
-			create_symlink_impl $1 $darwin
+			create_symlink_impl $1 $DARWIN_RC
 			;;
 		linux*)
-			create_symlink_impl $1 $linux
+			create_symlink_impl $1 $LINUX_RC
+			;;
+	esac
+}
+
+function remove_symlink() {
+	remove_symlink_impl $COMMON_RC
+
+	case ${OSTYPE} in
+		darwin*)
+			remove_symlink_impl $DARWIN_RC
+			;;
+		linux*)
+			remove_symlink_impl $LINUX_RC
 			;;
 	esac
 }
@@ -25,6 +38,15 @@ function create_symlink_impl() {
 		if [ ! -e $HOME/$dotfile ]; then
 			echo "Create symlink from $base_dir/$dotfile to $HOME"
 			ln -Fs "$base_dir/$dotfile" $HOME
+		fi
+	done
+}
+
+function remove_symlink_impl() {
+	for dotfile in $@; do
+		if [ -e $HOME/$dotfile ]; then
+			echo "Remove symlink $dotfile"
+			rm $HOME/$dotfile
 		fi
 	done
 }

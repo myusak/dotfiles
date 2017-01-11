@@ -1,9 +1,9 @@
 ## vim:ft=zsh
 
-function make_vimdir() {
-	local vimdirs=(".vimswap" ".vimundo" ".vimbackup")
+VIMDIRS=(".vimswap" ".vimundo" ".vimbackup")
 
-	for vimdir in $vimdirs; do
+function make_vimdir() {
+	for vimdir in $VIMDIRS; do
 		if [ ! -e "$HOME/.vim/$vimdir" ]; then
 			echo "Create $HOME/.vim/$vimdir"
 			mkdir -p "$HOME/.vim/$vimdir"
@@ -11,4 +11,11 @@ function make_vimdir() {
 	done
 }
 
-make_vimdir
+function remove_vimdir() {
+	for vimdir in $VIMDIRS; do
+		if [ -e "$HOME/.vim/$vimdir" ]; then
+			echo "Remove $HOME/.vim/$vimdir"
+			rm -rf $vimdir
+		fi
+	done
+}
