@@ -6,6 +6,5 @@ runtime core/basic.vim
 runtime core/autocommand.vim
 runtime core/keymap.vim
 runtime core/dein.vim
-
-colorscheme molokai
+runtime core/colorscheme.vim
 
