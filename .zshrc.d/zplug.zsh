@@ -4,15 +4,12 @@ fi
 
 source ~/.zplug/init.zsh
 
-zplug "zplug/zplug"
+zplug "zplug/zplug", hook-build:'zplug --self-manage'
 
 zplug "zsh-users/zsh-history-substring-search"
 zplug "zsh-users/zsh-syntax-highlighting", defer:2 # for delayed loading
 zplug "zsh-users/zsh-completions"
 zplug "olivierverdier/zsh-git-prompt", use:zshrc.sh
-
-zplug "junegunn/fzf-bin", as:command, from:gh-r, rename-to:fzf
-zplug "junegunn/fzf", as:command, use:bin/fzf-tmux, rename-to:fzf-tmux
 
 zplug "b4b4r07/enhancd", use:init.sh
 zplug "mollifier/cd-gitroot"
