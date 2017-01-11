@@ -1,0 +1,9 @@
+## vim:ft=zsh
+
+function install_zplug() {
+	curl -sL zplug.sh/installer | zsh
+}
+
+if [ ! -e $HOME/.zplug ]; then
+	install_zplug
+fi

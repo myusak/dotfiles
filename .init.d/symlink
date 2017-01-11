@@ -1,11 +1,30 @@
 ## vim:ft=zsh
 
 function create_symlink() {
-	local base_dir=$1
-	local dotfiles=(".vimrc" ".vimrc.d" ".zshrc" ".zshrc.d" ".screenrc")
+	local common=(".vimrc" ".vimrc.d" ".zshrc" ".zshrc.d")
+	local darwin=(".tmux.conf")
+	local linux=(".screenrc")
 
-	for dotfile in $dotfiles; do
-		echo "Create symlink from $base_dir/$dotfile to $HOME"
-		ln -Fs "$base_dir/$dotfile" $HOME
+	create_symlink_impl $1 $common
+
+	case ${OSTYPE} in
+		darwin*)
+			create_symlink_impl $1 $darwin
+			;;
+		linux*)
+			create_symlink_impl $1 $linux
+			;;
+	esac
+}
+
+function create_symlink_impl() {
+	local base_dir=$1
+	shift
+
+	for dotfile in $@; do
+		if [ ! -e $HOME/$dotfile ]; then
+			echo "Create symlink from $base_dir/$dotfile to $HOME"
+			ln -Fs "$base_dir/$dotfile" $HOME
+		fi
 	done
 }
