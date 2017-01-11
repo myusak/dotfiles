@@ -44,7 +44,7 @@ if dein#load_state(s:dein_dir)
     let s:lazy_toml = s:toml_dir . '/plugins.lazy.toml'
 
     call dein#load_toml(s:eagr_toml, { 'lazy': 0 })
-    "call dein#load_toml(s:lazy_toml, { 'lazy': 1 })
+    call dein#load_toml(s:lazy_toml, { 'lazy': 1 })
 
     call dein#end()
     call dein#save_state()

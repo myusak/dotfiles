@@ -18,8 +18,6 @@ set tabstop=4 softtabstop=4 shiftwidth=4
 set autoindent
 set smartindent
 set colorcolumn=121
-"set list
-"set listchars=tab:=-,trail:-
 set showtabline=2
 set showcmd
 set laststatus=2

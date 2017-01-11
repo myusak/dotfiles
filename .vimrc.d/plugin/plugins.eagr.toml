@@ -43,13 +43,6 @@ repo = 'ntpeters/vim-better-whitespace'
 # color scheme
 repo = 'tomasr/molokai'
 
-#" QuickRun
-#NeoBundle 'thinca/vim-quickrun'
-#NeoBundle 'osyo-manga/vim-watchdogs'
-#NeoBundle 'osyo-manga/shabadou.vim'
-#NeoBundle 'jceb/vim-hier'
-#NeoBundle 'dannyob/quickfixstatus'
-#
 #" Unite and Unite Sources
 #NeoBundle 'Shougo/unite.vim'
 #NeoBundle 'Shougo/unite-outline'
@@ -62,25 +55,4 @@ repo = 'tomasr/molokai'
 #NeoBundle 'tsukkee/unite-tag.git'
 #NeoBundle 'osyo-manga/unite-quickrun_config.git'
 #NeoBundle 'kopischke/unite-spell-suggest'
-#
-#" Neocomplete
-#NeoBundle 'Shougo/neocomplete.git'
-#NeoBundle 'osyo-manga/vim-marching'
-#NeoBundle 'ujihisa/neco-look'
-#NeoBundle 'osyo-manga/vim-snowdrop'
-#
-#" vimshell
-#NeoBundle 'Shougo/vimshell.git'
-#
-#" markdown
-#NeoBundle 'plasticboy/vim-markdown'
-#NeoBundle 'kannokanno/previm'
-#NeoBundle 'tyru/open-browser.vim'
 
-#" doxygen plugin
-#NeoBundle 'vim-scripts/DoxygenToolkit.vim'
-
-#" appearance
-#NeoBundle
-#
-#

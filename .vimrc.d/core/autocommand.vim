@@ -4,10 +4,21 @@ augroup vimrc_init
 
     autocmd FileType latex call s:latex()
     autocmd FileType cpp call s:cpp()
-    autocmd FileType ruby setlocal shiftwidth=2 tabstop=2 softtabstop=2
-    autocmd FileType sh,zsh setlocal noexpandtab
+    autocmd FileType ruby call s:ruby()
+    autocmd FileType sh,zsh call s:shellscript()
     autocmd FileType rst,markdown,gitrebase,gitcommit,vcs-commit,hybrid,text,help,tex set spell
 augroup END
+
+function! s:shellscript()
+    setlocal noexpandtab
+    setlocal nolist
+endfunction
+
+function! s:ruby()
+    setlocal shiftwidth=2
+    setlocal tabstop=2
+    setlocal softtabstop=2
+endfunction
 
 function! s:latex()
     let g:tex_flavor = "latex"

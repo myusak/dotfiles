@@ -1,0 +1,16 @@
+[[plugins]]
+repo = 'Shougo/neocomplete.vim'
+hook_add = 'call plugins#init#neocomplete#hook_source()'
+if = 'has("lua")'
+on_i = 1
+
+#NeoBundle 'osyo-manga/vim-marching'
+#NeoBundle 'ujihisa/neco-look'
+#NeoBundle 'osyo-manga/vim-snowdrop'
+
+#NeoBundle 'thinca/vim-quickrun'
+#NeoBundle 'osyo-manga/vim-watchdogs'
+#NeoBundle 'osyo-manga/shabadou.vim'
+#NeoBundle 'jceb/vim-hier'
+#NeoBundle 'dannyob/quickfixstatus'
+
