@@ -1,3 +1,9 @@
+# %n: user name
+# %m: hostname
+# %W: date (mm/dd/yy)
+# %*: time (hh:mm:ss)
+# %~: current directory
+# %#: user type (root: #, other: %)
 function zle-line-init zle-keymap-select {
 	case $KEYMAP in
 		vicmd)
@@ -8,26 +14,19 @@ function zle-line-init zle-keymap-select {
 		;;
 	esac
 
-	# %n: user name
-	# %m: hostname
-	# %W: date (mm/dd/yy)
-	# %*: time (hh:mm:ss)
-	# %~: current directory
-	# %#: user type (root: #, other: %)
 	if [ -n "${REMOTEHOST}${SSH_CONNECTION}" ]; then
-		# if you are in a remote host, make host name yellow
-
-		PROMPT="
-<$mode> (%D %*) <%?> [%~]
-%F{yellow}%m%f %# "
-
+		host="%F{yellow}%m%f"
 	else
-
-		PROMPT="
-<$mode> (%D %*) <%?> [%~]
-%F{cyan}%m%f %# "
-
+		host="%F{cyan}%m%f"
 	fi
+
+	if [ ! -z $VIRTUAL_ENV ]; then
+		venv=" ($(basename $VIRTUAL_ENV))"
+	fi
+
+	PROMPT="
+<$mode> (%D %*) <%?> [%~]
+$host$venv %# "
 
 	zle reset-prompt
 }
