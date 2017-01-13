@@ -20,8 +20,10 @@ function zle-line-init zle-keymap-select {
 		host="%F{cyan}%m%f"
 	fi
 
-	if [ ! -z $VIRTUAL_ENV ]; then
+	if [ ! -z "$VIRTUAL_ENV" ]; then
 		venv=" ($(basename $VIRTUAL_ENV))"
+	else
+		venv=""
 	fi
 
 	PROMPT="
