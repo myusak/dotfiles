@@ -1,17 +1,15 @@
-source ~/.zshrc.d/env.zsh
-source ~/.zshrc.d/bindkey.zsh
-source ~/.zshrc.d/alias.zsh
-source ~/.zshrc.d/setopt.zsh
-source ~/.zshrc.d/completion.zsh
-source ~/.zshrc.d/bin.zsh
-source ~/.zshrc.d/zplug.zsh
-source ~/.zshrc.d/prompt.zsh
-source ~/.zshrc.d/settings.zsh
+. ~/.zshrc.d/env.zsh
+. ~/.zshrc.d/alias.zsh
+. ~/.zshrc.d/opt.zsh
+. ~/.zshrc.d/bin.zsh
+. ~/.zshrc.d/prompt.zsh
+. ~/.zshrc.d/settings.zsh
+. ~/.zshrc.d/zplug.zsh
 
-source ~/.zshrc.d/local/linux.zsh
-source ~/.zshrc.d/local/macos.zsh
+. ~/.zshrc.d/local/linux.zsh
+. ~/.zshrc.d/local/macos.zsh
 
 if [[ -e ~/.zshrc.local ]]; then
-	source ~/.zshrc.local # local rc will override configurations
+	. ~/.zshrc.local # local rc will override configurations
 fi
 
