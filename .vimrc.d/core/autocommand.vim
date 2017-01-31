@@ -5,6 +5,7 @@ augroup vimrc_init
     autocmd FileType latex call s:latex()
     autocmd FileType cpp call s:cpp()
     autocmd FileType ruby call s:ruby()
+    autocmd FileType yaml call s:ruby()
     autocmd FileType sh,zsh call s:shellscript()
     autocmd FileType rst,markdown,gitrebase,gitcommit,vcs-commit,hybrid,text,help,tex set spell
 augroup END
