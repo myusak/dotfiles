@@ -55,4 +55,9 @@ Session.vim
 # Temporary data
 .ipynb_checkpoints/
 
+# Intellij project directory
+.idea
+
+# unison temporary file
+.unison*
 
