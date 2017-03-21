@@ -3,7 +3,7 @@ alias less='less --LINE-NUMBERS --raw-control-chars'
 alias grep='grep --line-number --color=auto'
 
 # --color=always does not work in BSD-ls
-alias ls='ls --color=always --group-directories-first'
+alias ls='ls --color=always --group-directories-first -v'
 alias ll='ls -l --size --human-readable --classify'
 alias la='ls -l --size --human-readable --classify --almost-all'
 alias l='ls -C --classify'
