@@ -3,7 +3,7 @@
 function install_zplug() {
 	if [ ! -e $HOME/.zplug ]; then
 		echo "Install zplug"
-		curl -sL zplug.sh/installer | zsh
+		curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh| zsh
 	fi
 }
 
