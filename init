@@ -7,10 +7,13 @@ fi
 
 source .init.d/include
 
-create_symlink $(cd $(dirname $0) && pwd)
+local base_dir=$(cd $(dirname $0) && pwd)
+
+create_symlink $base_dir
 
 make_vimdir
 
 install_zplug
 install_tpm
 
+install_nvimrc_files $base_dir

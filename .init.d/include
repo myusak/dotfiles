@@ -4,3 +4,4 @@
 . .init.d/symlink
 . .init.d/tpm
 . .init.d/zplug
+. .init.d/nvim
