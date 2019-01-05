@@ -11,8 +11,6 @@ local base_dir=$(cd $(dirname $0) && pwd)
 
 create_symlink $base_dir
 
-make_vimdir
-
 install_zplug
 install_tpm
 
