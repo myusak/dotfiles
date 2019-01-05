@@ -1,0 +1,197 @@
+[[plugins]]
+# better status bar
+repo = 'itchyny/lightline.vim'
+hook_add = 'runtime .nvimrc.d/lightline.vim'
+
+[[plugins]]
+# syntax highlighting
+repo = 'cespare/vim-toml'
+
+[[plugins]]
+# syntax highlighting
+repo = 'derekwyatt/vim-scala'
+
+[[plugins]]
+# syntax highlighting
+repo = 'chikamichi/mediawiki.vim'
+
+[[plugins]]
+# makes gvim-only colorschemes work transparently in terminal vim
+repo = 'vim-scripts/CSApprox'
+
+[[plugins]]
+repo = 'scrooloose/nerdtree'
+hook_add = '''
+    "" NERDTree configuration
+    let g:NERDTreeChDirMode=2
+    let g:NERDTreeIgnore=['\.rbc$', '\~$', '\.pyc$', '\.db$', '\.sqlite$', '__pycache__']
+    let g:NERDTreeSortOrder=['^__\.py$', '\/$', '*', '\.swp$', '\.bak$', '\~$']
+    let g:NERDTreeShowBookmarks=1
+    let g:nerdtree_tabs_focus_on_files=1
+    let g:NERDTreeMapOpenInTabSilent = '<RightMouse>'
+    let g:NERDTreeWinSize = 50
+    set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite
+
+    nnoremap <silent> <F2> :NERDTreeFind<CR>
+    nnoremap <silent> <F3> :NERDTreeTabsToggle<CR>
+'''
+
+[[plugins]]
+repo = 'jistr/vim-nerdtree-tabs'
+depends = ['nerdtree']
+
+[[plugins]]
+# displays tags in a window, ordered by scope 
+# http://majutsushi.github.io/tagbar/
+repo = 'majutsushi/tagbar'
+hook_add = '''
+    nmap <silent> <F4> :TagbarToggle<CR>
+
+    let g:tagbar_autofocus = 1
+
+    let g:tagbar_type_ruby = {
+        \ 'kinds' : [
+            \ 'm:modules',
+            \ 'c:classes',
+            \ 'd:describes',
+            \ 'C:contexts',
+            \ 'f:methods',
+            \ 'F:singleton methods'
+        \ ]
+    \ }
+'''
+
+[[plugins]]
+# displays the indention levels with thin vertical lines
+repo = 'Yggdroot/indentLine'
+
+[[plugins]]
+# handles extra whitespaces
+repo = 'ntpeters/vim-better-whitespace'
+
+[[plugins]]
+# shows a git diff in the gutter (sign column) and stages/undoes hunks.
+repo = 'airblade/vim-gitgutter'
+
+[[plugins]]
+# detects file type under the cursor according to context
+repo = 'Shougo/context_filetype.vim'
+
+[[plugins]]
+# syntax highlighting for context
+repo = 'osyo-manga/vim-precious'
+depends = ['context_filetype.vim']
+
+[[plugins]]
+# git in vim
+repo = 'tpope/vim-fugitive'
+
+[[plugins]]
+# better word object handling
+repo = 'tpope/vim-surround'
+
+[[plugins]]
+# better '.' command
+repo = 'tpope/vim-repeat'
+
+[[plugins]]
+# comment-out plugin
+repo = 'tpope/vim-commentary'
+
+[[plugins]]
+# A solid language pack (syntax, indent, etc)
+repo = 'sheerun/vim-polyglot'
+
+[[plugins]]
+repo = 'Shougo/denite.nvim'
+hook_add = '''
+    nnoremap [unite] <Nop>
+    nmap <Space>u [unite]
+
+    noremap <silent> [unite]q :<C-u>Denite -post-action=suspend -buffer-name=QuickFix quickfix<CR>
+    noremap <silent> [unite]f :<C-u>DeniteBufferDir -buffer-name=files file_rec<CR>
+    noremap <silent> [unite]a :<C-u>DeniteBufferDir -buffer-name=files file_mru file<CR>
+    noremap <silent> [unite]b :<C-u>Denite -buffer-name=buffer buffer<CR>
+    noremap <silent> [unite]t :<C-u>Denite -buffer-name=tabs tab<CR>
+    noremap <silent> [unite]r :<C-u>Denite -buffer-name=registers register<CR>
+
+    noremap <silent> [unite]g :<C-u>Denite grep -buffer-name=denite-grep<CR>
+    noremap <silent> [unite]G :<C-u>Denite -resume -buffer-name=denite-grep<CR>
+    noremap <silent> [unite]n :<C-u>Denite -resume -buffer-name=denite-grep -select=+1 -immediately<CR>
+    noremap <silent> [unite]p :<C-u>Denite -resume -buffer-name=denite-grep -select=-1 -immediately<CR>
+
+    let g:neomru#time_format = "(%Y/%m/%d %H:%M:%S) "
+
+    call denite#custom#map('insert', '<C-P>', '<denite:move_to_previous_line>')
+    call denite#custom#map('insert', '<C-N>', '<denite:move_to_next_line>')
+    call denite#custom#map('normal', '<C-P>', '<denite:move_to_previous_line>')
+    call denite#custom#map('normal', '<C-N>', '<denite:move_to_next_line>')
+
+    call denite#custom#map('insert', '<C-J>', '<denite:assign_next_text>')
+    call denite#custom#map('insert', '<C-K>', '<denite:assign_previous_text>')
+
+    call denite#custom#map('insert', '<C-S>', '<denite:do_action:split>')
+    call denite#custom#map('insert', '<C-V>', '<denite:do_action:vsplit>')
+    call denite#custom#map('insert', '<C-T>', '<denite:do_action:tabopen>')
+
+    call denite#custom#source('file_rec', 'matchers', ['matcher_fuzzy', 'matcher_project_files', 'matcher_ignore_globs'])
+
+    call denite#custom#filter('matcher_ignore_globs', 'ignore_globs',
+        \ [ '.git/', '.ropeproject/', '__pycache__/', 'venv/', 'images/', '*.min.*', 'img/', 'fonts/',
+        \   '.idea/', '.ipynb_checkpoints/'])
+
+'''
+
+[[plugins]]
+repo = 'Shougo/neomru.vim'
+depends = ['denite.nvim']
+
+[[plugins]]
+repo = 'Shougo/neoyank.vim'
+depends = ['denite.nvim']
+
+[[plugins]]
+repo = 'neoclide/denite-extra'
+depends = ['denite.nvim']
+
+[[plugins]]
+repo = 'kmnk/gitn'
+depends = ['denite.nvim']
+
+[[plugins]]
+repo = 'tsukkee/unite-tag.git'
+depends = ['denite.nvim']
+
+[[plugins]]
+repo = 'ujihisa/unite-colorscheme'
+depends = ['denite.nvim']
+
+
+[[plugins]]
+repo = 'Shougo/deoplete.nvim'
+on_event = 'InsertCharPre'
+hook_add = '''
+    let g:deoplete#auto_complete_delay = 0
+    let g:deoplete#auto_complete_start_length = 3
+    let g:deoplete#enable_camel_case = 0
+    let g:deoplete#ignore_case = 0
+    let g:deoplete#enable_refresh_always = 0
+    let g:deoplete#enable_smart_case = 1
+    let g:deoplete#file#enable_buffer_path = 1
+    let g:deoplete#enable_at_startup = 1
+
+    inoremap <expr><tab> pumvisible() ? "\<C-n>" : "\<tab>"
+'''
+
+
+[[plugins]]
+repo = 'Shougo/neco-vim'
+depends = ['deoplete.nvim']
+
+[[plugins]]
+repo = 'Shougo/neco-syntax'
+depends = ['deoplete.nvim']
+
+[[plugins]]
+repo = 'ujihisa/neco-look'
+depends = ['deoplete.nvim']
