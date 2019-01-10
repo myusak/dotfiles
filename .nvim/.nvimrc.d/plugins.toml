@@ -20,6 +20,12 @@ repo = 'chikamichi/mediawiki.vim'
 repo = 'vim-scripts/CSApprox'
 
 [[plugins]]
+# markdown previewer (requires node.js and yarn)
+repo = 'iamcco/markdown-preview.nvim'
+on_ft = ['markdown']
+build = 'sh -c "command -v yarn && cp app && yarn install"'
+
+[[plugins]]
 repo = 'scrooloose/nerdtree'
 hook_add = '''
     "" NERDTree configuration
@@ -41,7 +47,7 @@ repo = 'jistr/vim-nerdtree-tabs'
 depends = ['nerdtree']
 
 [[plugins]]
-# displays tags in a window, ordered by scope 
+# displays tags in a window, ordered by scope
 # http://majutsushi.github.io/tagbar/
 repo = 'majutsushi/tagbar'
 hook_add = '''
@@ -140,6 +146,14 @@ hook_add = '''
         \ [ '.git/', '.ropeproject/', '__pycache__/', 'venv/', 'images/', '*.min.*', 'img/', 'fonts/',
         \   '.idea/', '.ipynb_checkpoints/'])
 
+    if executable('rg')
+        call denite#custom#var('file/rec', 'command', ['rg', '--hidden', '--files', '--glob', '!.git'])
+        call denite#custom#var('grep', 'command', ['rg', '--hidden', '--threads', '1'])
+        call denite#custom#var('grep', 'recursive_opts', [])
+        call denite#custom#var('grep', 'final_opts', [])
+        call denite#custom#var('grep', 'separator', ['--'])
+        call denite#custom#var('grep', 'default_opts', ['-i', '--vimgrep', '--no-heading'])
+    endif
 '''
 
 [[plugins]]
