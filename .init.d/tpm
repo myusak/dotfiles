@@ -1,7 +1,7 @@
 ## vim:ft=zsh
 
 function install_tpm() {
-	if [[ $OSTYPE == "darwin"* && ! -e $HOME/.tmux/plugins/tpm ]]; then
+	if [[ ! -e $HOME/.tmux/plugins/tpm ]]; then
 		echo "Install Tmux Plugin Manager"
 		mkdir -p $HOME/.tmux/plugins
 		git clone https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm

@@ -170,7 +170,7 @@ if [[ -d ~/.zplug ]]; then
 		RPROMPT='$(git_super_status)'
 	fi
 
-	zplug load --verbose
+	zplug load
 fi
 
 if [[ -e ~/.zshrc.local ]]; then

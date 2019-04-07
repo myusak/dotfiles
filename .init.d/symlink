@@ -2,7 +2,7 @@
 
 COMMON_RC=(".vimrc" ".vimrc.d" ".zshrc" ".zshrc.d" ".gitignore_global")
 DARWIN_RC=(".tmux.conf")
-LINUX_RC=(".screenrc")
+LINUX_RC=(".screenrc" ".tmux.conf")
 
 function create_symlink() {
 	create_symlink_impl $1 $COMMON_RC
