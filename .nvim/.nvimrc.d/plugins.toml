@@ -115,7 +115,7 @@ hook_add = '''
     nmap <Space>u [unite]
 
     noremap <silent> [unite]q :<C-u>Denite -post-action=suspend -buffer-name=QuickFix quickfix<CR>
-    noremap <silent> [unite]f :<C-u>DeniteBufferDir -buffer-name=files file_rec<CR>
+    noremap <silent> [unite]f :<C-u>DeniteBufferDir -buffer-name=files file/rec<CR>
     noremap <silent> [unite]a :<C-u>DeniteBufferDir -buffer-name=files file_mru file<CR>
     noremap <silent> [unite]b :<C-u>Denite -buffer-name=buffer buffer<CR>
     noremap <silent> [unite]t :<C-u>Denite -buffer-name=tabs tab<CR>
@@ -140,7 +140,7 @@ hook_add = '''
     call denite#custom#map('insert', '<C-V>', '<denite:do_action:vsplit>')
     call denite#custom#map('insert', '<C-T>', '<denite:do_action:tabopen>')
 
-    call denite#custom#source('file_rec', 'matchers', ['matcher_fuzzy', 'matcher_project_files', 'matcher_ignore_globs'])
+    call denite#custom#source('file/rec', 'matchers', ['matcher_fuzzy', 'matcher_project_files', 'matcher_ignore_globs'])
 
     call denite#custom#filter('matcher_ignore_globs', 'ignore_globs',
         \ [ '.git/', '.ropeproject/', '__pycache__/', 'venv/', 'images/', '*.min.*', 'img/', 'fonts/',
@@ -166,10 +166,6 @@ depends = ['denite.nvim']
 
 [[plugins]]
 repo = 'neoclide/denite-extra'
-depends = ['denite.nvim']
-
-[[plugins]]
-repo = 'kmnk/gitn'
 depends = ['denite.nvim']
 
 [[plugins]]

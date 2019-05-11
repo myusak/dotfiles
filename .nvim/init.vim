@@ -114,6 +114,9 @@ function! s:imeoff()
     if has('mac')
         call system('osascript -e "tell application \"System Events\" to key code 102"')
     endif
+    if executable('gsettings') " gnome desktop
+        call system('gsettings set org.gnome.desktop.input-sources current "uint32 0"')
+    endif
 endfunction
 
 if !exists('*s:setupWrapping')

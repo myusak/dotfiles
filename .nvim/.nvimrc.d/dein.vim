@@ -3,7 +3,7 @@ let s:config_dir = empty($XDG_CONFIG_HOME) ? expand('~/.config/') : $XDG_CONFIG_
 
 let s:dein_dir = s:cache_dir . 'dein'
 let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
-let s:dein_remote_repo_url = "git://github.com/Shougo/dein.vim"
+let s:dein_remote_repo_url = "https://github.com/Shougo/dein.vim"
 
 function! s:install()
     if input("install dein.vim? [y/N]: ") == "y"
