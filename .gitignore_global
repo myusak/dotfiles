@@ -79,3 +79,19 @@ Session.vim
 !.vscode/extensions.json
 
 
+### https://raw.github.com/github/gitignore/79d46ba7e5dec413bff045f31e51d268b1145df7/Global/VirtualEnv.gitignore
+
+# Virtualenv
+# http://iamzed.com/2009/05/07/a-primer-on-virtualenv/
+.Python
+[Bb]in
+[Ii]nclude
+[Ll]ib
+[Ll]ib64
+[Ll]ocal
+[Ss]cripts
+pyvenv.cfg
+.venv
+pip-selfcheck.json
+
+
