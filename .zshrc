@@ -2,6 +2,8 @@
 export DOTFILES=$HOME/.dotfiles
 export EDITOR=nvim
 export LANG=en_US.UTF-8
+export LANGUAGE=en
+export LC_ALL=en_US.UTF-8
 
 export LSCOLORS=gxfxxxxxcxxxxxxxxxgxgx  # for GNU ls
 export LS_COLORS='di=01;36:ln=01;35:ex=01;32'
