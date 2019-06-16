@@ -30,6 +30,10 @@ alias rm='rm --interactive'
 alias cp='cp --interactive'
 alias mv='mv --interactive'
 
+alias nvimdiff='nvim -d'
+
+alias clear-escape='sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})*)?m//g"'
+
 # options
 autoload -Uz select-word-style; select-word-style default
 autoload -U compinit; compinit
