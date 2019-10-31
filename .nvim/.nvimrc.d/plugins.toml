@@ -23,7 +23,7 @@ repo = 'vim-scripts/CSApprox'
 # markdown previewer (requires node.js and yarn)
 repo = 'iamcco/markdown-preview.nvim'
 on_ft = ['markdown']
-build = 'sh -c "command -v yarn && cp app && yarn install"'
+build = 'sh -c "command -v yarn && cd app && yarn install"'
 
 [[plugins]]
 repo = 'scrooloose/nerdtree'
