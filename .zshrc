@@ -125,7 +125,9 @@ function zle-line-init zle-keymap-select {
 		;;
 	esac
 
-	if [ -n "${REMOTEHOST}${SSH_CONNECTION}" ]; then
+	if [ -e /.dockerenv ]; then
+		host="%F{magenta}%m%f"
+	elif [ -n "${REMOTEHOST}${SSH_CONNECTION}" ]; then
 		host="%F{yellow}%m%f"
 	else
 		host="%F{cyan}%m%f"
