@@ -12,6 +12,8 @@ HISTFILE=$HOME/.zsh_history
 HISTSIZE=1000000
 SAVEHIST=1000000
 
+bindkey -v  # Vi bind.
+
 # zcompile
 if [[ ! -e $HOME/.zshrc.zwc || $DOTFILES/.zshrc -nt $HOME/.zshrc.zwc ]]; then
     zcompile $HOME/.zshrc && echo "[zcompile] $DOTFILES/.zshrc compiled" 1>&2
@@ -44,19 +46,17 @@ alias hadolint="docker run --rm -it -v ${PWD}:/workdir -w /workdir hadolint/hado
 
 # options
 autoload -Uz select-word-style; select-word-style default
-autoload -U compinit; compinit
+autoload -Uz compinit; compinit
 autoload -Uz colors; colors
-
-autoload history-search-end
-
-bindkey -v # vi bind
+autoload -Uz history-search-end
 
 zle -N history-beginning-search-backward-end history-search-end
 zle -N history-beginning-search-forward-end history-search-end
 
 bindkey "^P" history-beginning-search-backward-end
 bindkey "^N" history-beginning-search-forward-end
-
+bindkey "^S" history-incremental-search-forward
+bindkey "^R" history-incremental-search-backward
 bindkey "^[[Z" reverse-menu-complete # enable shift tab
 
 typeset -U path PATH
@@ -71,6 +71,8 @@ setopt extended_glob
 setopt extended_history
 setopt glob
 setopt glob_dots
+setopt hist_no_store  # Ignore `history` command.
+setopt hist_find_no_dups
 setopt hist_ignore_all_dups
 setopt hist_ignore_space
 setopt hist_reduce_blanks
@@ -103,6 +105,20 @@ zstyle ':completion:*:process' command 'ps x -o pid,s,args'
 zstyle ':zle:*' word-chars " /=;@:{},|"
 zstyle ':zle:*' word-style unspecified
 
+zshaddhistory() {
+	# https://mollifier.hatenablog.com/entry/20090728/p1
+	local line=${1%%$'\n'}
+    local cmd=${line%% *}
+
+	# If all conditions below met, the command is added to the history.
+    [[ ${#line} -ge 5
+        && ${cmd} != (l|l[sal])
+        && ${cmd} != (c|cd)
+        && ${cmd} != (m|man)
+		&& ${cmd} != (which)
+		&& ${cmd} != ([n]vi[m])
+	]]
+}
 
 # bin
 FPATH="$HOME/.zshrc.d/bin:$FPATH"
@@ -173,7 +189,6 @@ if [[ -d ~/.zplug ]]; then
 	zplug "zsh-users/zsh-completions"
 	zplug "zsh-users/zsh-history-substring-search"
 	zplug "zsh-users/zsh-syntax-highlighting", defer:2 # for delayed loading
-	#zplug "b4b4r07/enhancd", use:init.sh
 
 	if ! zplug check --verbose; then
 		printf "Install? [y/N]: "
